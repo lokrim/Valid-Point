@@ -91,3 +91,85 @@ and [gate](../artifacts/20261005T103202Z-d2f4b72b/gate.md) support **G1 pass**
 for synthetic geometry/contracts. The 25 recorded output hashes were checked
 against the files. No reference fit, calibration, score, alarm, attack, quota
 or real-data claim was executed. S02 remains a separate future invocation.
+
+## 2026-10-05 — H007: S02 invoked; raw contracts pass with identifiability limits
+
+The researcher invoked S02 after G1. Implemented only raw zero-order motion
+residuals, fixed-region point counts and explicit independent availability/
+eligibility. Source notebooks call the importable evidence modules. No attack
+framework, external data/dependency, fitted reference, normalization, conformity
+score, probability, alarm or policy was introduced. S03 was not launched.
+
+Engineering assumptions are frozen in [raw_evidence.json](../configs/raw_evidence.json):
+synthetic shared nanosecond clock, 1.5 s anchor/1.55 s deadline, motion gap
+10 ms–1 s with 1 s lookback, and cloud age at most 200 ms measured at the deadline.
+These are declared hand-fixture assumptions, not learned or real-sensor validity
+limits. Regions are three independently receiver-defined 5 m tiles, height
+[-1,1) m, frozen at t=0, with half-open boundaries and GT-free namespaces.
+They are partial toy coverage; full ROI/oracle-gap work remains S04. The seed
+is explicitly null: all cases are literal, deterministic inputs with no RNG,
+not reference/calibration/held-out samples.
+
+Clarified raw-versus-eligibility behavior: valid counts remain observable when
+health/membership is unknown, but overall eligibility is unknown. Missing
+velocity is null, never a zero residual/penalty; static motion is structurally
+not applicable. Late-packet source/receipt timestamps shown for diagnosis cannot
+supply causal freshness or transform-time evidence. Unsupported units/frames,
+malformed fields, stale samples, invalid dt and unavailable transforms retain
+explicit reasons. Region authority is separate for receiver GT-free versus
+oracle evaluator namespaces; no evaluator data enters the raw GT-free demos.
+
+Negative/limiting findings are retained: legitimate acceleration gives 0.25 m
+residual, an inconsistent pose report gives 2 m, and a jointly consistent spoof
+gives 0 m. Same-sender motion reports do not independently verify motion. Literal
+point addition changes [2,1,0] to [3,2,0], while dense legitimate content gives
+[9,0,0]. Within-region rearrangement preserves counts and removal lowers them.
+Unknown visibility precludes deficit/zero-return accusations. These fixtures
+establish exact computations, not detection performance, calibrated false alarms,
+or any claim that a smaller/closer count is more trustworthy.
+
+The first [passing run](../artifacts/20261005T135122Z-f8a4238c/gate.md)
+(52 tests and three fresh kernels) is preserved unchanged. Post-run audit found
+that an existing unanchored `!pyproject.toml` Git-ignore exception exposed the
+source-snapshot copy. Anchored root documentation/packaging exceptions, added
+explicit late-metadata/boolean-context validation coverage, made actual motion
+conventions visible in each raw row, and added a linked evidence index. This was
+a packaging/contract hardening change, not favorable-case selection. No test or
+notebook execution failed. Jupyter emitted its local TCP encryption warning;
+execution and tests completed successfully with local sockets permitted.
+
+Final [gate](../artifacts/20261005T135337Z-e16df08e/gate.md), [manifest](../artifacts/20261005T135337Z-e16df08e/manifest.json),
+[test report](../artifacts/20261005T135337Z-e16df08e/test_results.json) and [execution log](../artifacts/20261005T135337Z-e16df08e/execution.log)
+record **53 passing tests**, three fresh-kernel notebooks and 36 visible hand
+expectations. All named tables/figures, exact config/seeds, raw input JSON,
+source/revision/environment and input/output hashes are in the sealed local
+bundle and reports. Generated source snapshots and reports remain Git-ignored;
+source notebooks contain no generated outputs. S02 raw-contract gate **PASS**;
+full G2 is **blocked pending separately invoked S03 fitting/calibration/score**.
+Stop here for review; none of the later prompts has been executed.
+
+## 2026-10-05 — H008: correction to H007 final-bundle packaging verification
+
+The post-run audit of H007's second bundle failed its assertion that all generated
+files were Git-ignored. Unlike the first leak, this arose because the archived
+source now included its own `.gitignore`, whose nested exceptions were active.
+The raw notebook/test gates still passed; this was a failed packaging acceptance
+check, not a scientific failure. H007's statement that that bundle was final and
+fully ignored is superseded here. Both preliminary bundles remain unchanged.
+
+Added an explicit `/artifacts/*/source/` ignore rule and a source-directory ignore
+check in the S02 runner gate. Re-executed the same tests and all three notebooks
+without changing scientific fixtures, bounds, measurements or plots. The actual
+final [run gate](../artifacts/20261005T135710Z-6e4710d8/gate.md),
+[manifest](../artifacts/20261005T135710Z-6e4710d8/manifest.json),
+[test report](../artifacts/20261005T135710Z-6e4710d8/test_results.json) and
+[execution log](../artifacts/20261005T135710Z-6e4710d8/execution.log) record
+53 passing tests and three fresh-kernel notebooks. The post-run audit verified
+all 80 output hashes and 31 source hashes, sequential execution counts in each
+notebook, no error outputs, clean source notebooks, read-only exported files,
+and no generated artifacts/reports exposed to Git. This audit passed.
+
+The raw-contract gate remains PASS, with the consistent-spoof, legitimate
+acceleration, rearrangement/removal and unknown-visibility limitations in H007.
+Full G2, fitted/scored evidence and detection/probability claims remain blocked
+pending separately invoked S03. No later stage was run or externally published.

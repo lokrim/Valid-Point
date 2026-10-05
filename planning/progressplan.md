@@ -1,7 +1,7 @@
 # Ordered progress plan
 
-Updated 2026-10-05. **P0 was reviewed; S00 and S01 were executed.** S02–S10 remain
-unstarted. G1 passed for infrastructure and synthetic contracts only; no score or validation gate passed. Stage numbers are new Valid Point
+Updated 2026-10-05. **P0 was reviewed; S00–S02 were executed.** S03–S10 remain
+unstarted. G1 and the S02 raw-contract portion of G2 passed; the complete G2 score/calibration gate has not passed. Stage numbers are new Valid Point
 work units, not inherited milestones.
 
 | Stage / prompt | Dependencies | Deliverables | Principal risk | Stop/go criterion | Status |
@@ -9,7 +9,7 @@ work units, not inherited milestones.
 | P0 — scaffold/planning | User brief | Empty package, directories/config, method plans, prompts, coverage and setup verification | Mistaking planning for empirical evidence | G0 review; stop before implementation | Reviewed by S00 invocation; no empirical claim |
 | [S00 bootstrap](prompts/00_bootstrap.md) | Researcher review of G0 | Minimal chosen environment, provenance/execution helpers, NB00 | Local Jupyter kernel needs localhost sockets; installed dependency lock is CPython 3.14/macOS arm64 resolved | Fresh notebook structural evidence, no unrequested research | **G1 infrastructure passed**: [run gate](../artifacts/20261005T094948Z-b2d74f78/gate.md), [manifest](../artifacts/20261005T094948Z-b2d74f78/manifest.json); six tests passed. Science not run. |
 | [S01 scenes](prompts/01_synthetic_scenes.md) | S00 | Contracts, small synthetic geometry/reader, NB01 | GT leakage, empty/absent confusion; synthetic visibility is evaluator-only | G1 causal/unknown fixtures visibly correct | **G1 passed**: [gate](../artifacts/20261005T103202Z-d2f4b72b/gate.md), [manifest](../artifacts/20261005T103202Z-d2f4b72b/manifest.json), [executed NB01](../artifacts/20261005T103202Z-d2f4b72b/01_synthetic_scenes.executed.ipynb); nine tests. No score or GT-free result. |
-| [S02 raw evidence](prompts/02_raw_evidence.md) | S01 | Kinematics, surplus and eligibility; three NB02 notebooks | Treating self-report or zero returns as truth | Raw units, confounders/evasions/unknowns tested; no scores yet | Pending |
+| [S02 raw evidence](prompts/02_raw_evidence.md) | S01 G1 passed | Kinematics, fixed-region counts and independent eligibility; three NB02 notebooks | Consistent spoof has zero residual; acceleration is nonzero; removal/rearrangement evade counts; visibility unknown | Raw units, confounders/evasions/unknowns tested; no scores yet | **Raw-contract PASS**: [gate](../artifacts/20261005T135710Z-6e4710d8/gate.md), [manifest](../artifacts/20261005T135710Z-6e4710d8/manifest.json), [tests](../artifacts/20261005T135710Z-6e4710d8/test_results.json); 53 tests, three fresh kernels and 36 hand checks. Full G2 remains blocked pending uninvoked S03. |
 | [S03 references/score](prompts/03_references_score.md) | S02 | Clean fitting, calibration, weight-free score/ablations; two NB03 notebooks | Leakage, degenerate references, calibrated no-power score | G2 monotonicity and separate calibration; negative results accepted | Pending |
 | [S04 GT-free](prompts/04_gt_free.md) | S03 | Fixed tiles, optional ego proposal comparison, oracle gap, NB04 | Proposal/context manipulation and low coverage | G3; failure blocks operational claim, not recording results | Pending |
 | [S05 consensus](prompts/05_consensus.md) | S04 | Leave-one-out diagnostic and gated ablation, NB05 | Correlated peers/collusion/unique honest view | G4 or documented unknown consensus; baseline can continue | Pending |
@@ -26,8 +26,12 @@ synthetic-only negative/limitations report; it cannot declare the requested
 real comparison complete. Optional temporal/learned/detector/probability/
 transfer stages require new prompts, notebooks and gates before work begins.
 
-S02 is the next separately invoked stage. S01's deliberately simple geometry
-and evaluator truth do not establish GT-free visibility or any score claim.
+S02 is complete and stops for review. S03 is the next separately invocable stage;
+it has not been launched. The hand fixtures establish raw measurement contracts,
+not independent motion verification, visibility, detection performance or score validity.
+Both preliminary S02 raw-passing runs are preserved. Their packaging audits
+found Git-ignore leaks from archived source exceptions; these were corrected and
+explicitly gated in the final bundle. See H007–H008 for the failures and repair.
 No data acquisition occurred. The initial S00 and S01 sandbox socket failures,
 their preserved runs and repairs are recorded in [history](history.md).
 

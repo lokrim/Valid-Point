@@ -86,9 +86,12 @@ hf_cache/
 !/scripts/**
 !/src/**
 !/tests/**
-!README.md
-!pyproject.toml
+!/README.md
+!/pyproject.toml
 
 # Re-apply cache exclusions after the broad source/test unignore rules above.
 **/__pycache__/
 **/*.py[cod]
+
+# Seal archived source trees against their own nested .gitignore exceptions.
+/artifacts/*/source/
