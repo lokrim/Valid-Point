@@ -1,0 +1,90 @@
+# Local Python environments, packaging, caches, and editor state
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+.ipynb_checkpoints/
+.DS_Store
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Datasets and raw data: ignore all downloaded/extracted contents, keep instructions
+/data/**
+!/data/**/
+!/data/**/README.md
+!/data/**/.gitkeep
+
+/datasets/**
+!/datasets/**/
+!/datasets/**/README.md
+!/datasets/**/.gitkeep
+
+# Download and dataset caches
+.cache/
+data_cache/
+hf_cache/
+
+# Large dataset archives and compressed segment files
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.bz2
+*.xz
+*.zst
+
+# Point cloud, 3D sensor, and telemetry formats
+*.pcd
+*.bin
+*.ply
+*.las
+*.laz
+*.bag
+*.mcap
+*.pcap
+
+# Numerical arrays, serialized tensors, and columnar dataset dumps
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.parquet
+*.feather
+
+# Generated research artifacts: ignore run products, keep instructions
+/artifacts/**
+!/artifacts/**/
+!/artifacts/**/README.md
+!/artifacts/**/.gitkeep
+
+# Generated reports, figures, and tables: keep instructions
+/reports/**
+!/reports/**/
+!/reports/**/README.md
+!/reports/**/.gitkeep
+
+# Planning, documentation, configs, notebooks, and code: never ignore
+!/planning/
+!/planning/**
+!/configs/**
+!/notebooks/**
+!/scripts/**
+!/src/**
+!/tests/**
+!README.md
+!pyproject.toml
