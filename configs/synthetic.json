@@ -1,0 +1,26 @@
+{
+  "schema_version": "s01.synthetic.v1",
+  "stage": "S01",
+  "track": "gt_free_contract_only",
+  "episode": "toy_road",
+  "anchor_ns": 1000000000,
+  "deadline_delta_ns": 50000000,
+  "latency_ns": 2000000,
+  "time_mapping": "synthetic source and trusted receiver clocks share an exact integer-ns epoch; arrivals are injected",
+  "units": {"position": "m", "velocity": "m/s", "time": "ns", "intensity": "unitless"},
+  "rng_scheme": "NumPy SeedSequence(seed) per complete scene; no global RNG",
+  "seed_families": {
+    "development": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "reference": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
+    "calibration": [200, 201, 202, 203, 204, 205, 206, 207, 208, 209],
+    "test": [300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329]
+  },
+  "security_groups": {
+    "west_low": "installation_west_low",
+    "west_high": "installation_west_high",
+    "north": "installation_north",
+    "vehicle": "vehicle_principal"
+  },
+  "reference_lineage": "not fitted in S01",
+  "calibration_lineage": "not fitted in S01"
+}

@@ -66,3 +66,28 @@ fresh-kernel execution, exact config bytes, and 19 verified output hashes.
 G1's infrastructure portion passed; its S01 scientific contract portion remains
 pending. Research measurements/results are **not run**. The three separate
 researcher choices in H003/decision notes remain open for later dependent work.
+
+## 2026-10-05 — H006: S01 invoked; causal synthetic scene contract
+
+The researcher invoked S01 with S00 evidence available. Added a deterministic
+whole-scene NumPy generator, explicit sender/frame/deadline and transform
+records, distinct parsed-empty/absent/late/malformed states, an unavailable
+vehicle-kinematics fixture, independent declared security groups and a strict
+canonical synthetic point-cloud reader. Evaluator object/occlusion truth is a
+separate record; decision inputs keep visibility unknown. The road, wall,
+moving object and three views are a constructed geometry check, not a GT-free
+finding. Seed families remain the proposed development 0–9, reference 100–109,
+calibration 200–209 and test 300–329; no seed role was amended or used for
+fitting/evaluation.
+
+The first [S01 run](../artifacts/20261005T102854Z-d974bbaf/gate.md) was blocked
+because the sandbox denied local Jupyter sockets; it remains immutable. An
+intermediate passing run exposed a legend covering the north viewpoint label,
+so the figure layout was repaired and that run retained. The final
+[manifest](../artifacts/20261005T103202Z-d2f4b72b/manifest.json),
+[executed NB01](../artifacts/20261005T103202Z-d2f4b72b/01_synthetic_scenes.executed.ipynb),
+[nine-test report](../artifacts/20261005T103202Z-d2f4b72b/test_results.json),
+and [gate](../artifacts/20261005T103202Z-d2f4b72b/gate.md) support **G1 pass**
+for synthetic geometry/contracts. The 25 recorded output hashes were checked
+against the files. No reference fit, calibration, score, alarm, attack, quota
+or real-data claim was executed. S02 remains a separate future invocation.

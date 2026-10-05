@@ -8,11 +8,10 @@ version = "0.0.0"
 description = "Reproducible research on sender conformity in cooperative LiDAR"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["numpy>=2,<3"]
 
 [project.optional-dependencies]
-# Only the S00 notebook runner, figure export and invariant tests need these.
-# The importable valid_point package keeps a standard-library runtime.
+# S00/S01 notebook execution, figure export and invariant tests.
 bootstrap = [
   "ipykernel>=6,<8",
   "nbclient>=0.10,<1",
