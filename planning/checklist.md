@@ -1,6 +1,7 @@
 # Evidence-based acceptance checklist
 
 Status key: **Verified setup** = documentary/structural evidence only;
+**Verified S00** = executed bootstrap infrastructure evidence, no science;
 **Pending** = not implemented or run; **Blocked** = unmet prerequisite;
 **Failed** = observed technical failure; **Negative result** = completed valid
 experiment without claimed benefit. No scientific item is currently complete.
@@ -16,8 +17,8 @@ results, code alone and unexecuted notebooks never complete scientific rows.
 | P02 | Raw data and generated outputs ignored, placeholder instructions retained | Verified setup | [setup verification](setup_verification.md), [.gitignore](../.gitignore) |
 | P03 | Official segment archive packaging and candidate entries checked without raw downloads | Verified setup | [sources](sources.md) |
 | P04 | All user requirements mapped and eleven future prompts prepared; no research executed | Verified setup | [coverage](requirements_coverage.md), [prompt index](prompts/README.md), [setup verification](setup_verification.md) |
-| P05 | Researcher reviews proposed method/resource choices before implementation | Pending | Researcher response recorded in history; G0 |
-| B00 | Fresh bootstrap notebook visibly proves environment, package origin and export convention | Pending | NB00; T00_environment; F00_structure; `tests/test_bootstrap.py` report; manifest |
+| P05 | Researcher reviews proposed method/resource choices before implementation | Verified setup for S00 | S00 invocation after scaffold review; [H005](history.md). The three future dependent choices remain open. |
+| B00 | Fresh bootstrap notebook visibly proves environment, package origin and export convention | Verified S00 | [executed NB00](../artifacts/20261005T094948Z-b2d74f78/00_bootstrap.executed.ipynb); [T00_environment](../reports/tables/T00_environment_S00_infrastructure_none_20261005T094948Z-b2d74f78.md), [T00_scaffold](../reports/tables/T00_scaffold_S00_infrastructure_none_20261005T094948Z-b2d74f78.md), [F00_structure](../reports/figures/F00_structure_S00_infrastructure_none_20261005T094948Z-b2d74f78.png); [six-test report](../artifacts/20261005T094948Z-b2d74f78/test_results.json), [manifest](../artifacts/20261005T094948Z-b2d74f78/manifest.json), [gate](../artifacts/20261005T094948Z-b2d74f78/gate.md). Science not run. |
 | C01 | Synthetic clocks/frames/seed groups deterministic and no future inputs | Pending | NB01; T01_scene_contract; F01_scene_views; `test_contracts.py`, `test_synthetic.py` |
 | C02 | Empty, absent, late, malformed, inapplicable and unknown states distinct | Pending | NB01/NB02 availability; T01_unknown_states/T02_eligibility; `test_availability.py` |
 | E01 | Kinematic units, motion residual and consistent-spoof evasion shown | Pending | NB02 kinematics; T02_kinematic_raw/F02_motion; `test_kinematics.py` |
@@ -49,7 +50,7 @@ results, code alone and unexecuted notebooks never complete scientific rows.
 | D04 | Every segment clean/attacked timelines plus aggregate and wide uncertainty caveat | Pending | Executed NB09 timelines per C0–C3; F09_segment_timelines/T09_failures |
 | D05 | Real policies use GT-free score and exact bytes; no oracle/GT policy leakage | Pending | NB09 grouped; T09_policies/F09_bandwidth_quality; `test_gt_isolation.py` |
 | D06 | Final H opened only after freeze; no outcome-driven scene replacements | Pending | Exposure log, final manifest, executed final NB09 outputs |
-| N01 | Every implemented stage runs fresh kernel, displays failures, exports provenance and gate | Pending | All stage notebook/execution logs/manifests; `scripts/execute_notebooks.py` report |
+| N01 | Every implemented stage runs fresh kernel, displays failures, exports provenance and gate | Verified S00; later stages pending | [executed NB00](../artifacts/20261005T094948Z-b2d74f78/00_bootstrap.executed.ipynb), [execution log](../artifacts/20261005T094948Z-b2d74f78/execution.log), [manifest](../artifacts/20261005T094948Z-b2d74f78/manifest.json), [gate](../artifacts/20261005T094948Z-b2d74f78/gate.md), [test report](../artifacts/20261005T094948Z-b2d74f78/test_results.json). Deliberate missing-provenance rejection visible; initial sandbox socket failure and repair in [H005](history.md). |
 | P10 | Paper claims linked to artifacts, all pending gates and limitations visible | Pending | NB10; T10_claim_evidence/T10_protocol; `test_reporting.py` |
 | X01 | Temporal/probability/detector/transfer claims remain gated until independent evidence | Pending | New spec/notebook if invoked; otherwise explicit not-run rows in T10_claim_evidence |
 

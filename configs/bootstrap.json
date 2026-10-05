@@ -1,0 +1,22 @@
+{
+  "schema_version": "s00.bootstrap.v1",
+  "stage": "S00",
+  "track": "infrastructure",
+  "segment": "none",
+  "split_role": "not applicable: no research data",
+  "seed": 0,
+  "rng_scheme": "not applicable: no random research operation",
+  "deadline": {
+    "value": null,
+    "unit": "not applicable: no sender/frame decision"
+  },
+  "time_mapping": "not applicable: no frames",
+  "frame_id": "not applicable: no frames",
+  "transform_id": "not applicable: no geometry",
+  "reference_lineage": "not run",
+  "calibration_lineage": "not run",
+  "policy_id": "not run",
+  "attack_id": "not run",
+  "research_measurements": "not run",
+  "research_results": "not run"
+}

@@ -5,10 +5,10 @@ checks can detect specified corruptions in cooperative LiDAR observations and
 help allocate bandwidth without unnecessarily excluding honest viewpoints.
 The repository is `valid-point`; the Python package is `valid_point`.
 
-**Status: setup and planning only.** There are no research algorithms, datasets,
-executed notebooks, attacks, simulations, or scientific results here. No
-dependencies have been installed. The package has no runtime dependencies and
-can be imported from `src/`; implementation begins only after plan review.
+**Status: S00 bootstrap executed; science not run.** There are no research
+algorithms, datasets, attacks, simulations, or scientific results. The package
+has no runtime dependencies and imports from `src/`. The S00-only notebook,
+figure and test tools are pinned in `requirements.lock`.
 
 Start with the [planning index](planning/README.md),
 [ordered stages](planning/progressplan.md), and
@@ -26,13 +26,27 @@ in the paper.
 
 | Directory | Purpose |
 | --- | --- |
-| `src/valid_point/`, `tests/`, `scripts/` | Future importable computation, meaningful checks, small entry points |
-| `notebooks/`, `configs/` | Future visible stage evidence and frozen configurations |
+| `src/valid_point/`, `tests/`, `scripts/` | S00 provenance, meaningful checks, small entry point; research computation pending |
+| `notebooks/`, `configs/` | S00 fresh-kernel evidence and frozen configuration; later stages pending |
 | `planning/` | Method contracts, decisions, provenance, acceptance, staged prompts |
 | `data/`, `artifacts/` | Ignored raw inputs and reproducible generated runs |
 | `reports/figures/`, `reports/tables/` | Ignored report-ready exports with provenance |
 
 `lidar-shield` is read-only historical context. No code, results, dependencies,
 milestones, or data paths are inherited from it. Detector and cooperative
-perception frameworks are outside this initial project. Stop at planning until
-the researcher reviews the proposed gates.
+perception frameworks are outside this initial project. S01 requires a separate
+explicit invocation.
+
+To rerun S00 on CPython 3.14, create an isolated environment, install the
+hashed bootstrap lock, then run the thin entry point from the repository root:
+
+```sh
+uv venv --python 3.14 .venv
+uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
+.venv/bin/python scripts/execute_notebooks.py
+```
+
+The runner sets the source path for both tests and a new Jupyter kernel. It
+creates a new ignored `artifacts/<run_id>/` bundle and uniquely named exports
+under `reports/`. The [checklist](planning/checklist.md) links the executed
+S00 evidence. The source notebook is intentionally unexecuted in Git.

@@ -1,5 +1,6 @@
 # Tests
 
-Empty until implementation. Add invariant, leakage, causality, reader, and byte
-accounting tests with each stage; tests alone do not constitute research results.
+`test_bootstrap.py` checks S00 config, manifest, hashes, missing provenance,
+fresh-kernel execution and import boundaries. Tests alone do not constitute
+research results. Add causal and scientific tests only with their stages.
 The exact planned test files appear in `planning/prompts/`.

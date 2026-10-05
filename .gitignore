@@ -88,3 +88,7 @@ hf_cache/
 !/tests/**
 !README.md
 !pyproject.toml
+
+# Re-apply cache exclusions after the broad source/test unignore rules above.
+**/__pycache__/
+**/*.py[cod]

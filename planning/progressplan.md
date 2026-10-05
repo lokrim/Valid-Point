@@ -1,13 +1,13 @@
 # Ordered progress plan
 
-Updated 2026-10-05. Only **P0 scaffold/planning** is prepared for review. S00–S10
-are unstarted. No scientific gate is passed. Stage numbers are new Valid Point
+Updated 2026-10-05. **P0 was reviewed and S00 executed.** S01–S10 remain
+unstarted. G1 infrastructure passed; no scientific gate is passed. Stage numbers are new Valid Point
 work units, not inherited milestones.
 
 | Stage / prompt | Dependencies | Deliverables | Principal risk | Stop/go criterion | Status |
 | --- | --- | --- | --- | --- | --- |
-| P0 — current setup | User brief | Empty package, directories/config, method plans, prompts, coverage and setup verification | Mistaking planning for empirical evidence | G0 review; stop before implementation | Prepared for review |
-| [S00 bootstrap](prompts/00_bootstrap.md) | Researcher review of G0 | Minimal chosen environment, provenance/execution helpers, NB00 | Hidden installs/state or framework creep | Fresh notebook structural evidence, no unrequested research | Pending |
+| P0 — scaffold/planning | User brief | Empty package, directories/config, method plans, prompts, coverage and setup verification | Mistaking planning for empirical evidence | G0 review; stop before implementation | Reviewed by S00 invocation; no empirical claim |
+| [S00 bootstrap](prompts/00_bootstrap.md) | Researcher review of G0 | Minimal chosen environment, provenance/execution helpers, NB00 | Local Jupyter kernel needs localhost sockets; installed dependency lock is CPython 3.14/macOS arm64 resolved | Fresh notebook structural evidence, no unrequested research | **G1 infrastructure passed**: [run gate](../artifacts/20261005T094948Z-b2d74f78/gate.md), [manifest](../artifacts/20261005T094948Z-b2d74f78/manifest.json); six tests passed. Science not run. |
 | [S01 scenes](prompts/01_synthetic_scenes.md) | S00 | Contracts, small synthetic geometry/reader, NB01 | GT leakage, empty/absent confusion | G1 causal/unknown fixtures visibly correct | Pending |
 | [S02 raw evidence](prompts/02_raw_evidence.md) | S01 | Kinematics, surplus and eligibility; three NB02 notebooks | Treating self-report or zero returns as truth | Raw units, confounders/evasions/unknowns tested; no scores yet | Pending |
 | [S03 references/score](prompts/03_references_score.md) | S02 | Clean fitting, calibration, weight-free score/ablations; two NB03 notebooks | Leakage, degenerate references, calibrated no-power score | G2 monotonicity and separate calibration; negative results accepted | Pending |
@@ -25,6 +25,12 @@ requirements, not just code paths. If S09 is incomplete, S10 can prepare a
 synthetic-only negative/limitations report; it cannot declare the requested
 real comparison complete. Optional temporal/learned/detector/probability/
 transfer stages require new prompts, notebooks and gates before work begins.
+
+S01 remains the next separately invoked stage. Its causal/unknown-state tests
+and scientific part of G1 are pending. No data acquisition or experiment was
+performed in S00. The initial sandbox socket failure and repaired notebook-cell
+warning are recorded in [history](history.md); the earlier immutable run remains
+available locally.
 
 After each invoked stage, update this table with actual artifact IDs, test and
 notebook results, remaining risks and next permitted gate. Append the dated
