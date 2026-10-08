@@ -37,16 +37,47 @@ milestones, or data paths are inherited from it. Detector and cooperative
 perception frameworks are outside this initial project. S01 requires a separate
 explicit invocation.
 
-To rerun S00 on CPython 3.14, create an isolated environment, install the
-hashed bootstrap lock, then run the thin entry point from the repository root:
+## Environment Setup
+
+To create an isolated environment and install the hashed bootstrap lock on CPython 3.14:
 
 ```sh
 uv venv --python 3.14 .venv
 uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
-.venv/bin/python scripts/execute_notebooks.py
 ```
 
-The runner sets the source path for both tests and a new Jupyter kernel. It
-creates a new ignored `artifacts/<run_id>/` bundle and uniquely named exports
-under `reports/`. The [checklist](planning/checklist.md) links the executed
-S00 evidence. The source notebook is intentionally unexecuted in Git.
+## Running Notebooks & Generating Outputs
+
+Source notebooks in `notebooks/` are intentionally kept unexecuted in Git. They validate runner harness environment variables and provenance at runtime (`VP_REPO_ROOT`, `VP_RUN_DIR`, etc.), so they are executed via dedicated stage runner scripts in `scripts/`.
+
+Each script runs tests, launches fresh Jupyter kernels, and seals an immutable evidence bundle under an ignored `artifacts/<run_id>/` directory containing fully executed `*.executed.ipynb` copies, alongside figures in `reports/figures/` and tables in `reports/tables/`.
+
+### Commands by Notebook and Stage
+
+| Target Notebook(s) in `notebooks/` | Stage | Command |
+| :--- | :--- | :--- |
+| `00_bootstrap.ipynb` | S00 Bootstrap | `.venv/bin/python scripts/execute_notebooks.py` |
+| `01_synthetic_scenes.ipynb` | S01 Synthetic Scenes | `.venv/bin/python scripts/show_synthetic_scene.py` |
+| `02_kinematics.ipynb`<br>`02_spatial_surplus.ipynb`<br>`02_availability.ipynb` | S02 Measurements | `.venv/bin/python scripts/measure_synthetic.py` |
+| `03_clean_references.ipynb`<br>`03_score_and_ablations.ipynb` | S03 Fit & Score | `.venv/bin/python scripts/fit_and_score.py` |
+
+### Run All Stages
+
+To execute all notebooks across all stages in sequence:
+
+```sh
+.venv/bin/python scripts/execute_notebooks.py && \
+.venv/bin/python scripts/show_synthetic_scene.py && \
+.venv/bin/python scripts/measure_synthetic.py && \
+.venv/bin/python scripts/fit_and_score.py
+```
+
+### Viewing Executed Notebooks and Outputs
+
+1. **In IDE / JupyterLab**: Open the generated `artifacts/<run_id>/*.executed.ipynb` directly in VS Code or Jupyter (`.venv/bin/jupyter lab`).
+2. **Export to HTML**: Convert the latest executed notebooks to HTML for instant viewing in any web browser:
+   ```sh
+   LATEST_RUN=$(ls -td artifacts/20* | head -n 1)
+   .venv/bin/jupyter nbconvert --to html "$LATEST_RUN"/*.executed.ipynb
+   ```
+

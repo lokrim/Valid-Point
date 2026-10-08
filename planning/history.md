@@ -173,3 +173,40 @@ The raw-contract gate remains PASS, with the consistent-spoof, legitimate
 acceleration, rearrangement/removal and unknown-visibility limitations in H007.
 Full G2, fitted/scored evidence and detection/probability claims remain blocked
 pending separately invoked S03. No later stage was run or externally published.
+
+## 2026-10-08 — H009: S03 clean reference and score semantics
+
+The researcher invoked S03 after verified S02 raw contracts. Added clean-only
+linear-quantile references (`u=q95`, `b=4(q95-q50)`), a specific fixed-tile/range
+bin → sensor-class fallback, support of at least 200 rows across two segments,
+strict unknown full-region coverage, vehicle max(K,S), preregistered static S-only,
+and separate clean 1% order-statistic calibration with strict `A>c` ties. Four
+parameter layers remain distinct; no factor weights or policy were fitted.
+
+The evidence uses deterministic **illustrative clean raw fixtures**, not replayed
+LiDAR or observed attack data. Reference seeds 100–109, calibration 200–209 and
+test 300–329 are disjoint. The [support table](../reports/tables/T03_reference_support_S03_gt_free_illustrative_clean_fixtures_20261008T091758Z-d1642764.md)
+shows zero scale in B_constant and low support in C_far_sparse, both falling
+back to S:vehicle; unsupported sensor context remains unknown. The
+[ablation table](../reports/tables/T03_ablations_S03_gt_free_illustrative_clean_fixtures_20261008T091758Z-d1642764.md) and
+[threshold figure](../reports/figures/F03_threshold_ablation_S03_gt_free_illustrative_clean_fixtures_20261008T091758Z-d1642764.png) expose the negative result:
+all 1,200 illustrative clean test decisions have A=0 and tied K/S identity.
+Clean calibration chose c=0 with 0/400 alarms; this does not establish 1%
+future sensor FPR or attack power. A separate all-one clean fixture chose c=1
+and has zero possible alarms under strict `>`, retained as a no-power case.
+The frame-level Wilson interval is displayed but lacks a clustered coverage
+guarantee; per-segment calibration rates and strict hand-case unknowns are visible.
+
+The first [S03 run](../artifacts/20261008T091106Z-2b73f795/gate.md) failed because
+sandboxed Jupyter could not bind a local socket. A later passing run was
+superseded after review found spatial bins shared between tiles. A subsequent pass was superseded by a figure title-layout repair. Another
+[failed run](../artifacts/20261008T091349Z-79149ae5/gate.md) caught a tie-key
+bookkeeping error. All were preserved. The final [gate](../artifacts/20261008T091758Z-d1642764/gate.md),
+[manifest](../artifacts/20261008T091758Z-d1642764/manifest.json), [tests](../artifacts/20261008T091758Z-d1642764/test_results.json) and two
+[reference](../artifacts/20261008T091758Z-d1642764/03_clean_references.executed.ipynb) /
+[score](../artifacts/20261008T091758Z-d1642764/03_score_and_ablations.executed.ipynb) notebooks show 59 passing
+tests, fresh execution from two kernels, 12 passing hand cases and a
+nonincreasing literal point-addition sweep. G2 passes only for reproducible
+semantics and leakage prevention on the illustrative inputs; empirical
+operating validity and attack detection remain blocked by absent real/replayed
+clean measurements. S04 and later gates were not run.

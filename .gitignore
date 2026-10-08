@@ -95,3 +95,5 @@ hf_cache/
 
 # Seal archived source trees against their own nested .gitignore exceptions.
 /artifacts/*/source/
+
+.DS_Store

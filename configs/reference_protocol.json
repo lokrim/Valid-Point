@@ -1,0 +1,17 @@
+{
+  "schema_version": "s03.reference.v1",
+  "stage": "S03",
+  "track": "gt_free",
+  "segment": "illustrative_clean_fixtures",
+  "decision_unit": "sender/frame/deadline",
+  "reference_seeds": [100,101,102,103,104,105,106,107,108,109],
+  "calibration_seeds": [200,201,202,203,204,205,206,207,208,209],
+  "test_seeds": [300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329],
+  "frames_per_seed": 40,
+  "rng_scheme": "deterministic modular illustrative raw fixtures; no random generator",
+  "engineering_validity": {"motion_dt_s": [0.01,1.0], "max_motion_age_ns": 1000000000, "max_cloud_age_ns": 200000000, "receiver_tiles_m": [5,5], "height_slab_m": [-1,1], "anchor_ns": 1500000000, "deadline_ns": 1550000000},
+  "fitted_ranges": {"quantile_method":"linear empirical", "u_quantile":0.95,"b_multiplier":4,"min_rows":200,"min_segments":2,"hierarchy":["sensor_class_and_bin","sensor_class","pooled_if_units_and_semantics_compatible"],"pooled_compatible":false},
+  "operating_calibration": {"alpha":0.01,"min_known":200,"index_rule":"ceil((n+1)*(1-alpha)); if index>n, threshold=1", "alarm_rule":"known A > c; ties abstain from alarm"},
+  "future_policy_parameters": "not set; later S06 gate",
+  "claim_scope": "illustrative semantics only, no replayed clean LiDAR or attack-performance claim"
+}
