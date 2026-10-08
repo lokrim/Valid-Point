@@ -1,0 +1,17 @@
+{
+  "dataset": "sberrio/Mixed-Signals-V2X",
+  "revision": "1a61aea747aa6bc45da2c2f085a1f1d3abc41f91",
+  "archive": "data/mixed_signals/1a61aea747aa6bc45da2c2f085a1f1d3abc41f91/archives/train/mini_7.tar",
+  "source_url": "https://huggingface.co/datasets/sberrio/Mixed-Signals-V2X/resolve/1a61aea747aa6bc45da2c2f085a1f1d3abc41f91/train/mini_7.tar",
+  "archive_bytes": 7894272000,
+  "archive_sha256": "46e9dbe9f6e952be9186a6271abbcaaf11c965a5589d785fc278afd3eb235663",
+  "license": "CC BY-NC-SA 4.0 (pinned dataset card; see planning/sources.md)",
+  "window_seconds": 5,
+  "max_clouds_per_stream": 50,
+  "max_cloud_bodies": 250,
+  "max_extraction_bytes": 2000000000,
+  "streaming_rss_target_bytes": 4294967296,
+  "geometry_sample_per_cloud": 500,
+  "plot_sample_per_stream": 5000,
+  "receipt_assumption": "idealized source time; no measured arrival telemetry"
+}

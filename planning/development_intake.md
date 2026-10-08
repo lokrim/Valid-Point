@@ -1,6 +1,6 @@
 # R01 development intake specification — 2026-10-08
 
-**Status:** no local raw Mixed Signals data found in Valid Point. `data/` contains only README; artifact clouds are synthetic. No external data paths were searched or reused. R01 is the next stage, independent of failed old G3 and deferred consensus/bandwidth.
+**Status (2026-10-09):** R01 completed on the project-local pinned mini_7 archive; see [GR1](../artifacts/20261008T192922Z-R01/gate.md), [executed notebook](../notebooks/R01_development_intake.ipynb) and the [updated field matrix](dataset_field_matrix.md). The resource and intake text below remains the original R01 specification. No sibling data, comparison/final archive or old S prompt was used.
 
 ## Exact acquisition and resources
 
@@ -12,7 +12,7 @@
 - Reserve **25 GB free disk** before acquisition: ~7.9 GB archive + up to ~7.9 GB extraction + 2 GB bounded outputs/scratch + 7.2 GB margin. Avoid a second HF cache/archive copy. R01 extracts selected members only (cap 2 GB), so actual use should be lower. Stop if the inventory exceeds the cap; do not expand scope silently.
 - CPU-only; target peak RSS <=4 GiB, streaming one cloud at a time. No detector/GPU dependency. Later overlays get a separate resource budget.
 
-**Required resource decision:** authorization for this one 7.9 GB download and 25 GB free-space reservation within Valid Point. This planning turn did not authorize or perform archive acquisition. The full copy-ready work order is [R01](prompts/R01_development_intake.md); it stops without downloading if the resource decision is absent.
+**Resource decision recorded:** the user performed the specified download and said to continue. Local size/hash verification passed; the user's predownload disk output and curl redirect chain were not retained. The [acquisition record](../artifacts/20261008T192922Z-R01/acquisition.json) distinguishes observed facts from those missing logs. The full work order is [R01](prompts/R01_development_intake.md).
 
 ## Bounded content inspection
 
