@@ -1,29 +1,22 @@
-# Planning index
+# Valid Point: real-cloud replay research plan
 
-Prepared 2026-10-05. **Review proposal; no scientific implementation or results.**
-Equations, numerical cases, parameter defaults, and output names below are
-specifications and hand calculations, not experimental findings.
+Revised **2026-10-08** under the researcher's authorized planning revision. This is the current planning authority for package `valid_point`. No dataset archive, new experiment, detector, or old stage prompt was run during revision. Start with [the plain-language overview](overview.md), [evidence audit](evidence_audit.md), and [next executable prompt R01](prompts/R01_development_intake.md).
 
-| Document | Authority within this proposal |
+The experiment replays real Mixed Signals observations, modifies one agent's clouds in separate deterministic copies, and compares causal conformity trajectories against matched clean replay. Favorable detection and publication are hypotheses, never gates.
+
+| Canonical document | Responsibility |
 | --- | --- |
-| [01 — Question and threat model](01_research_contract.md) | Decision boundary, claims, attacker and benign cases |
-| [02 — Data protocol](02_data_protocol.md) | Archive handling, timing/frames, scene roles, leakage prevention |
-| [03 — Phase 1](03_phase1_evidence.md) | Raw factors, two tracks, unknowns, references, score and calibration |
-| [04 — Consensus](04_consensus.md) | Independent identities, comparability, quorum, failures |
-| [05 — Bandwidth](05_bandwidth.md) | Next-frame decisions, actual bytes, payloads, proxies |
-| [06 — Attacks](06_attack_simulation.md) | Future deterministic overlays and episode design |
-| [07 — Validation](07_validation.md) | Comparisons, uncertainty, figures, tables, claim limits |
-| [08 — Notebooks](08_notebooks.md) | Every stage's visible evidence, reproducibility and exports |
-| [09 — Decisions and gates](09_decisions_and_gates.md) | Review choices, defaults, stop/go boundaries |
-| [Sources](sources.md) | Official packaging checks and limits of verification |
-| [Historical context](context_review.md) | What was read and which inherited assumptions are rejected |
-| [History](history.md) | Append-only dated decisions and changed assumptions |
-| [Progress plan](progressplan.md) | Ordered stages, dependencies, risks, status |
-| [Checklist](checklist.md) | Verifiable evidence, never completion by code presence |
-| [Requirement coverage](requirements_coverage.md) | Trace from user requirements to documents/prompts |
-| [Prompts](prompts/README.md) | Self-contained future work orders, manually invoked |
+| [01 Research contract](01_research_contract.md) | Question, hypotheses, threat model, information boundary and claims |
+| [02 Data protocol](02_data_protocol.md) | Frames, time, agent identity, splits and holdout protection |
+| [Field feasibility](dataset_field_matrix.md) / [source verification](sources.md) | Exact documented fields, provenance, unknowns and pinned sources |
+| [Development intake](development_intake.md) | One archive, resource decision, bounded inspection and feasibility gate |
+| [03 Method](03_phase1_evidence.md) / [temporal specification](temporal_spec.md) | Minimal candidates, fitting, instantaneous and temporal records |
+| [04 Cross-agent evidence](04_consensus.md) / [05 bandwidth disposition](05_bandwidth.md) | Conditional geometry and explicit deferrals |
+| [06 Replay and attacks](06_attack_simulation.md) / [07 Evaluation](07_validation.md) | Deterministic overlays, episode grid, metrics and denominators |
+| [08 Evidence delivery](08_notebooks.md) / [paper outline](paper_evidence.md) | Visible notebooks, figures, claims and reproducibility |
+| [09 Gates and risks](09_decisions_and_gates.md) | Technical acceptance, failure behavior and genuine decisions |
+| [Progress](progressplan.md), [checklist](checklist.md), [coverage](requirements_coverage.md) | Current execution status and proof requirements |
+| [Prompts](prompts/README.md) | R01–R07, individually invoked implementation work orders |
+| [History](history.md) / [audit](evidence_audit.md) | Append-only decisions and corrections to prior claims |
 
-Current user requirements govern this project. Historical plans do not. Record
-any subsequent change in history, progressplan, and checklist before treating a
-revised method as frozen. A failed scientific hypothesis can complete a stage
-with honest evidence; it cannot unlock a claim whose prerequisites failed.
+S00–S04 remain historical work. Old S00–S10 prompts are marked superseded; do not execute them as the current sequence. Their original bytes and the previous canonical documents are retained in [the dated snapshot](archive/2026-10-08-pre-replan/snapshot_manifest.json). Existing artifacts, notebooks, code and tests remain unchanged. Historical setup/context documents describe their original date, not today's readiness. If an old README or runner conflicts with this plan, this plan governs future work; R02 will update executable entry-point documentation.

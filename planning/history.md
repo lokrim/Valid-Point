@@ -253,3 +253,35 @@ PASS and G3 FAIL_NEGATIVE_RESULT**. Therefore the GT-free score is not defensibl
 for operational readiness under the evidence available, and operational/real-policy
 claims are blocked. No detector was imported, no external data was acquired, and
 S05 or any later prompt was not executed. Stop for researcher review.
+
+## 2026-10-08 — H011: authorized real-data replay replan and evidence corrections
+
+The researcher explicitly authorized changing stage order/defaults/deferrals around actual Mixed Signals point clouds and causal temporal score trajectories. Revised canonical planning documents and added copy-ready R01–R07 prompts. No old prompt, new scientific experiment, archive download, detector install, or sibling project access was performed. Original bytes of all 29 planning documents/prompts were saved before edits in `archive/2026-10-08-pre-replan/` with SHA-256 manifest; old prompt bodies remain behind supersession banners. Existing code, tests, source notebooks, immutable runs and reports are unchanged.
+
+Read source/modules/tests/runners/notebooks and stored manifests/gates critically. Read-only verification of 22 manifests checked 1,172 listed output hashes with zero mismatches; execution counts/errors and prior failed runs remain recorded in `audit/2026-10-08-artifact-verification.json`. Hash validity proves preservation, not research validity. See [evidence audit](evidence_audit.md) for credited computation, illustrative evidence and missing integration.
+
+Corrections to **H009/H010, former checklist G01/G02, and former progress claims**:
+
+- S03 residual/count rows are deterministic arithmetic rather than independently processed scene observations. Numbered scene/seed IDs do not establish independence. G2 remains a semantic fixture pass, not empirical calibration or dataset leakage assurance.
+- S04 reference rows cycle literal patterns; calibration anomalies are constructed from `reference.u` or `u+1`, not clean clouds processed through the scoring path. Disjoint bundles/seeds establish bookkeeping, not independent calibration observations.
+- S04's “withholding/reversing labels” test changes unused local variables, then reruns unchanged inputs. H010's claim that this proves GT-boundary isolation is retracted at that scope. Source API separation exists, but meaningful changed/withheld evaluator integration tests remain required.
+- S04 does not call S02 availability checks or enforce source-time/pose/transform/context/full-reference eligibility end-to-end. A complete fixed grid alone is not full operational eligibility. Current `gt_free.decide` hard-codes vehicle K/S and receives supplied K=0 in the fixtures.
+- Proposal/association failure states are annotations, not measured algorithm outputs. Tile/box count differences and the stored 3/7 versus 5/7 attack alarms, 2/5 benign alarms and abstentions are retained as constructed-case arithmetic only.
+- S04's G3 failure marker is constant in code and expected by its runner/test. The negative constructed counterexamples and readiness block remain valid at that scope; this is not empirical proof that all GT-free methods fail. Technical execution passed but broader boundary/eligibility/calibration claims were incomplete.
+
+Verified public metadata revision `1a61aea747aa6bc45da2c2f085a1f1d3abc41f91`, devkit commit `4f1f259e0d0fdc9ccfaf9f22b9627c02e263fe3d`, and ACFR commit `8b670c80e248a25924fb1e72dc649992292064db`. Direct official-site retrieval failed; indexed official pages confirmed provenance links, with freshness limitation recorded. Source inspection found documented pose/orientation/timestamps, but no consumed/verified measured velocity. The existing K residual is motion self-consistency, has no cloud input, and cannot respond to point-only edits with metadata held fixed. Pose-derived velocity is dependent and same-interval derivation is tautological. Raw RSU map coordinates, paired vehicle z offsets, legacy timestamp parsing and nearest-pose lookup require local compatibility validation; nearest future poses cannot feed causal inference. No real inputs were found in Valid Point.
+
+Direction changes and rationale:
+
+1. Replace synthetic-first through old S09 with R01 one-archive bounded development intake. Keep mini_7 development, mini_10–13 comparisons and mini_14 final based on unchanged public metadata, not observed performance. Labels become optional offline evaluation inputs rather than a GT-free intake prerequisite. Comparison/final outcomes remain unexposed.
+2. Replace mandatory K/S and mandatory oracle tracks with minimal sensor-specific density baseline plus conditional temporal geometry and explicit candidate feasibility. Keep useful primitive computation; do not assume fixed 5 m tiles or intensity normalization transfer. No manually favorable factor weights.
+3. Promote a small elapsed-time EWMA, distinct instantaneous/state/alarm records, warm-up/missing/reset/contamination behavior and memoryless comparison to the core. This supersedes H003's temporal deferral. No attack flag controls state.
+4. Move deterministic real-cloud removal/displacement/count-preserving/addition overlays and bursts into development R03, then frozen grouped evaluation R05. Preserve intended/injected/realized effects, failures and companions. These are interventions on recordings, not a physical laser simulator.
+5. Defer consensus, bandwidth policies/savings, detector/AP, learned combinations and broad adaptive/collusion/Sybil studies. This supersedes H003's bandwidth hypothesis and old S05/S06/S08 dependencies; it narrows the objective rather than claiming those studies succeeded.
+6. New GR gates separate technical completion from scientific support. Correctly recorded infeasibility, no-power or negative results may complete a technical stage. No old failed result is erased and no favorable detection/publication result is required.
+
+Next action is R01 only after authorization for the exact 7,894,272,000-byte mini_7 archive and 25 GB free-space reservation. No algorithm choice is requested from the researcher before feasibility. Later comparison/final acquisition has its own resource decision. Publication suitability and novelty remain unestablished with current evidence and must be assessed from completed results and related primary literature.
+
+## 2026-10-09 — H012: planning revision completion check (Asia/Kolkata)
+
+The H011 revision began on 2026-10-08 and completed after local midnight. Its dated snapshot/source-audit IDs remain unchanged. Final planning checks passed: all 29 original document hashes preserved, prior history retained as an exact prefix, all 11 old prompt bodies preserved behind supersession banners, seven R prompts with required sections, no broken current-document file links, and audited code/config/test/notebook bytes unchanged. Only planning files changed. See `audit/2026-10-08-planning-checks.json`. This is a planning/document-preservation check, not a scientific test or GR1 pass. Stop at the reviewable plan; R01 still requires the explicit archive/storage resource decision.

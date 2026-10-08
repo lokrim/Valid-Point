@@ -20,3 +20,7 @@ The review raises questions rather than establishing facts about Valid Point:
 The source check and every future empirical claim need new evidence. A familiar
 equation requested in the current brief is a new specification here, not a
 ported algorithm or an endorsement of historical results.
+
+## 2026-10-08 correction of current authority
+
+The table above is a historical account of the 2026-10-05 setup, not the active plan. H011 now makes bounded real-data intake early, temporal behavior core, oracle/consensus/bandwidth secondary, and independent field feasibility mandatory. This revision did not access any sibling project. See [current index](README.md) and [evidence audit](evidence_audit.md).

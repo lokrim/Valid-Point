@@ -1,117 +1,36 @@
-# Dataset packaging, roles, time, frames, and splits
+# Dataset, time and split protocol — revision 2026-10-08
 
-## Verified boundary and acquisition plan
+Use the pinned HF native training archives in [sources](sources.md). Preserve raw files and archive hashes; overlays go into new immutable run directories. No sibling project data or caches are authorized. Work one archive at a time, with safe member inventory and a disk preflight before extraction. No comparison/final outcomes have been inspected in this revision.
 
-The [dated source check](sources.md) verifies an author-maintained release with
-segment TARs, including `mini_7` and `mini_10`. Individual PCD frame downloads
-are **not** an advertised unit. Choose an archive, acquire it in a later
-authorized intake, then inspect selected frames locally. No data is present
-or assumed in this project. Do not reuse a sibling project's paths or caches.
+## Candidate roles and freeze
 
-Process one archive/sequence at a time. Budget disk for archive plus extraction,
-bounded overlay work, manifests and compact measurements; do not assume archive
-bytes equal peak disk usage. Validate safe archive members (no traversal or
-external symlinks), hash the archive, inventory all members and label coverage,
-extract to an immutable raw directory, and process bounded chunks. Preserve
-source hashes/URLs/revision and compact clean measurements between sequences.
-Later deletion of scratch copies must not delete originals needed for audit;
-record a reproducible reacquisition route and retention decision.
+Keep mini_7 development; C0=mini_10, C1=mini_11, C2=mini_12, C3=mini_13; final H=mini_14. Published sizes/hashes still match prior metadata, so no role change is justified. Labels are optional evaluator inputs, no longer a prerequisite for GT-free feasibility. A missing label file cannot silently become an empty annotation.
 
-## Proposed roles, chosen before outcomes
+Only metadata access/packaging/agent coverage/timing/calibration can justify a candidate replacement before outcomes. Record the amendment and original candidate. Unfavorable results never justify replacement. Determine acquisition adjacency from stamps/session metadata; sequential IDs are not independent scenes. If selected segments share a session, group and qualify uncertainty accordingly. At least four valid comparison segments remain the target; fewer yields an explicitly incomplete comparison study, but does not block development or a limitations report.
 
-Use availability, public-label status and metadata quality only. The following
-candidate manifest is based on the verified inventory, not performance or
-historical splits. It becomes frozen after metadata-only preflight; it is not
-a claim that contents have been validated.
-
-| Role | Candidate | Constraint |
+| Outer test | Clean calibration | Clean reference fit |
 | --- | --- | --- |
-| Development only | `mini_7` | Reader, units, transforms, plots; never counts among comparisons or fits frozen real evaluation references. |
-| Comparison C0 | `mini_10` | Distinct labeled segment, outer held out once |
-| Comparison C1 | `mini_11` | Distinct labeled segment, outer held out once |
-| Comparison C2 | `mini_12` | Distinct labeled segment, outer held out once |
-| Comparison C3 | `mini_13` | Distinct labeled segment, outer held out once |
-| Untouched final H | `mini_14` | Available additional archive: reserve now, inspect only access/packaging metadata until final protocol lock. |
+| C0 | C1 | C2,C3 |
+| C1 | C2 | C3,C0 |
+| C2 | C3 | C0,C1 |
+| C3 | C0 | C1,C2 |
 
-Public competition train membership provides candidates for a new research
-split; it does not imply all frames have labels or make the official unlabeled
-validation/test archives usable as labeled comparisons. Metadata preflight must
-record frame counts, actual label availability, agent coverage, duration,
-timing, transform sources, sensor groups and acquisition adjacency. Missing
-label files differ from valid empty annotations. Never impute absent labels as
-zero objects. Consecutive segment IDs may be correlated; verify session/time
-metadata and report it, without promising scene diversity from names alone.
+Freeze method, engineering bounds, factors, contexts, temporal constants, attack grid, metrics and split hashes before running these folds. Fit each fold anew; calibrate memoryless and temporal thresholds separately on actual clean pipeline outputs from its calibration segment. Fit/calibration/test never share a scene within a fold. All sensors, windows, clean copies and interventions of a segment stay together. No random-frame split; shared raw measurements are reusable only if independent of fit parameters. Seal all fold predictions before revealing aggregate or per-fold outcomes; no sequential tuning from earlier folds.
 
-If a candidate fails access/label/transform checks, record the failure before
-outcome inspection. A replacement requires a dated metadata-only protocol
-amendment and a new freeze. Once outcomes have been observed, do not replace
-unfavorable or missing selected segments; label the planned study incomplete.
-Fewer than four valid distinct labeled comparison segments means no completed
-real-data validation or policy comparison. Synthetic work can still proceed.
+For final H, C0–C2 supply clean references and C3 clean calibration with the original method already locked. Final H stays unopened beyond published metadata until R06 and explicit archive resource authorization. If comparison findings motivate changes, version a new study and freeze it before H exposure; disclose that comparison results became development evidence. Once H outcomes are exposed it is never restored to “untouched.”
 
-## Frozen outer evaluation with minimum four comparisons
+## Source and availability clocks
 
-| Outer test | Clean calibration only | Clean reference fitting only |
-| --- | --- | --- |
-| C0 | C1 | C2, C3 |
-| C1 | C2 | C3, C0 |
-| C2 | C3 | C0, C1 |
-| C3 | C0 | C1, C2 |
+Use original timestamp text plus parsed integer ns. Map to elapsed seconds only for plots. Retain synchronization index independently. The devkit legacy short-subsecond parser is checked against real names; do not silently right-pad as decimal seconds. Record timestamp gaps, duplicates, reversals, cross-stream skew and odometry sample age. Exact scan timing, deskewing and clock-error bounds remain unresolved until evidence permits a statement.
 
-The method, context bins, fallbacks, target FPR, attacks, severity grid, budget
-grid and plotting/metric definitions are locked before any outer results.
-For each fold, fit normal ranges on clean reference segments; choose the
-operating threshold only on that fold's clean calibration segment. Attacked
-variants cannot fit references or calibrate benign thresholds. The simple
-baseline has no learned factor weights. Any later learned/adaptive model must
-use segment-grouped inner fitting/tuning confined to reference segments; if
-there are too few groups for defensible tuning, disable that extension. Do not
-use another fold's test outcomes to revise this fold. Execute all frozen folds
-before revealing their outcome summary.
+Replay events globally in acquisition order under **idealized receipt at source time**. Decision key: episode, physical principal, sensor, file/sync ID, source_ns, deadline_ns. For primary replay deadline equals event time. Tie order is deterministic by sensor/file ID; a tied event may only use already ingested events. Each scorer sees only the current event and earlier received history. Episode/run/file identifiers are opaque join keys, never features or a way to infer an intervention schedule. Missing expected events are logged by a fixed cadence/metadata schedule after its deadline, never inferred as attacks. No nearest-future pose or cloud, centered filtering, offline future-corrected trajectory or full-segment statistic enters an online decision.
 
-All agents, frames, clean counterparts, overlaps, attack variants and episode
-windows of a segment stay together in each fold. Synthetic train/calibration/
-test scene seeds also remain disjoint. No random frame split. Group references
-are recomputed per fold; globally fitted caches are prohibited. Cross-fold
-clean measurement reuse is allowed only if independent of fitted parameters.
-Persist split hashes and assert disjoint provenance before each run.
+Use latest past odometry with a predeclared age bound and zero-order hold as the initial causal transform assumption. R01/R02 set the bound from sample cadence and clean geometric stability, with explicit physical rationale and sensitivity, not attack detection. If poses cannot support motion compensation, retain native-frame count measurements and make affected geometry unknown. The original devkit nearest-neighbor lookup is an offline comparison only. No current evidence supports measured network delay; any later nonzero latency is an injected scenario.
 
-For final H, predeclare C0–C2 as clean reference/training and C3 as clean
-calibration, with method/policy choices already locked. Open H once for final
-evaluation; reserve other available segments untouched if expanding. An
-outcome-driven revision retires that holdout's untouched status and requires
-an explicitly new study. Report every segment and aggregate, including failed
-segments. Four outer groups give wide generalization uncertainty, even if there
-are many frames. Adjacent segments from one intersection do not establish
-independence or cross-dataset transfer.
+## Frame and principal contract
 
-## Time and coordinate contracts
+`T_B_from_A` maps metre coordinates A→B. Validate matrices, quaternion order, handedness, inverse round trips and static landmark consistency without labels. Follow DK-frame's raw RSU map convention and paired vehicle height changes; show why the z adjustments cancel. Do not assume raw PCDs are all laser-native. The top RSU frame is the shared plotting frame. Keep raw, devkit-preprocessed body, map and top-frame arrays distinguishable with transform hashes, time/sample IDs and status.
 
-Keep integer nanoseconds for source timestamp, receiver arrival, anchor,
-deadline and odometry times; retain original strings and conversion provenance.
-Do not infer identical acquisition times from a synchronization index. Match
-within declared tolerances, never by floating-point equality or nearest future
-sample. Source age and receiver transport delay are separate fields.
-The archive has no verified packet-arrival telemetry: initial replay assumes
-arrival equals mapped acquisition time plus a declared synthetic latency.
-Name this idealized assumption in every real timeline; delay/drop results use
-injected schedules, not measured network claims.
+Three vehicles and one RSU are physical principals. `top` and `dome` remain distinct sensor rows in plots but one security group. Primary agent-level view uses each vehicle's named stream and top as the RSU representative; dome is a companion sensor diagnostic, not an extra vote. Do not infer authenticated identity, sensor health or visibility from a name.
 
-Represent `T_receiver_from_sensor(t)` as a homogeneous rigid transform with
-explicit source/target frame, units, handedness, quaternion ordering, extrinsic
-and odometry provenance, and validity interval. Proposed receiver is the top
-RSU frame; sender clouds remain native until an authoritative composition is
-validated. Verify pose frame versus LiDAR mounting frame, static RSU relations,
-rotation orthogonality, inverse round trips, and known geometric landmarks.
-Do not estimate unknown extrinsics from attacked clouds or GT agreement.
-Causal pose propagation is allowed only with a separately bounded age/error
-contract; future interpolation is prohibited at inference. Offline reference
-GT may be used for evaluator sanity checks, not hidden online correction.
-
-Engineering skew, age, pose-gap, finite-value and transform limits are explicit
-configuration values with units and a source/rationale, set before evaluation.
-Missing calibration, unsupported time mapping, unverified coordinate convention
-or excessive extrapolation produces unknown affected evidence. Cross-agent
-comparison additionally needs verified comparable views; a valid transform is
-necessary but insufficient. Real overlays require all archive, timestamp,
-label and transform gates for a bounded sequence first.
+The intake matrix and failure log are authoritative for actually available fields. Geometry overlap does not establish common visibility; absent support is never a maliciousness label. Preserve raw intensity; do not pool across sensors or import detector-specific clipping as evidence normalization.

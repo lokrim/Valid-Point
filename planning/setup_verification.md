@@ -28,3 +28,7 @@ was changed. The plan's sample scores are hand calculations, not measurements.
 Review starts at [planning index](README.md), then
 [decisions and gates](09_decisions_and_gates.md). The next action is review;
 implementation prompts remain unexecuted.
+
+## 2026-10-08 planning revision verification
+
+The setup-only statements above describe 2026-10-05 and must not be read as today's package status. S00–S04 now exist at the limited scope in [evidence audit](evidence_audit.md). This revision preserved pre-edit planning bytes, read and hashed existing artifacts, verified public source revisions and remodeled the canonical documents/prompts. No scientific tests/notebooks/stages or large downloads were executed during revision. Current document/link/preservation checks are recorded in `audit/2026-10-08-planning-checks.json` after editing; they establish planning coherence, not dataset feasibility or detection performance.

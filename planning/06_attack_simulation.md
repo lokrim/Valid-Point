@@ -1,84 +1,39 @@
-# Future deterministic overlays and simulation
+# Replay and deterministic interventions — revision 2026-10-08
 
-**Plan only.** Do not implement overlays, generate attacks, or run simulations
-during setup. Synthetic scenes and modules precede any real archive overlays.
+This is open-loop **recorded point-cloud replay with deterministic overlays**, not a physical laser compromise simulator or closed-loop traffic experiment. Clouds are immutable originals; each derived arm has its own reader inputs and causal history. All agents are replayed in event-time order under the explicit ideal-arrival model. Honest companions and matched clean runs are retained; identical companions need not have identical scores if an optional peer-dependent method is later added.
 
-## Immutable overlay contract
+## Small initial grid
 
-Each future overlay references immutable source hashes and an explicit
-`overlay_id`, parent scene/segment, sender set, frame window, track, seed,
-algorithm/config/software versions, units, attacker knowledge, severity,
-requested target region and output paths. Derive per-frame RNG streams from
-stable scene/sender/frame/attack identifiers, never process ordering or Python's
-unstable hash. Save selected point IDs and transformations to replay exactly.
-Never edit or replace originals; isolate derived files under an ignored run.
-Include every honest companion agent and the clean matched replay.
+Primary compromised principal `003` (metadata fallback in the research contract); no receiver compromise. Select it before scores. No point intervention changes poses, timestamps, identities or honest companion bytes. Attacker generator may inspect its own current unmodified scan and its previous local scans, as a compromised sender could; the **scorer** may not access those clean counterparts. Primary target selection uses this sender's available geometry only. GT-box/object-targeted interventions, if later added, are evaluator-assisted diagnostics in a separate table and never pooled with operational-target attacks.
 
-Record three distinct fields:
-
-1. **Intended:** requested count/position/velocity/timing change and scientific aim.
-2. **Injected:** actual changes applied after constraints, serialization and quotas.
-3. **Realized:** measured changes after production reading, deadline eligibility,
-   transforms, region membership, score and task proxy; may be zero or unknown.
-
-Retain failed and ineffective attempts with reasons, not just successful attacks.
-No resampling until a desired effect occurs. Coverage denominators include all
-scheduled attempts, feasible injections, valid derived files, eligible scores
-and effective proxy perturbations, separately.
-
-## Planned attack and benign matrix
-
-| Mechanism | Deterministic intervention / severity | Critical control or evasion |
+| Family | Initial severity grid and exact intended operation | Required realized checks / likely limitation |
 | --- | --- | --- |
-| Graded point addition | Add 0,1,2,4,8,16,32,64 points to fixed synthetic regions; later real counts expressed also as fraction of clean region count | Oracle in-box and GT-free tile/empty-region targets; zero baseline and unchanged companions |
-| Count-preserving rearrangement/replacement | Move 10%,25%,50%,100% of selected points; fixed offset/shape grid | Same global and where possible same per-tile counts; expected count-detector failure |
-| Point removal | Remove 10%,25%,50%,100% deterministically | Known versus unknown visibility; empty present cloud differs from omitted message |
-| Velocity spike/drift | Add configured m/s spike or m/s² drift over a causal window | Pose unchanged; compare legitimate acceleration/turns |
-| Joint odometry spoof | Change pose/velocity/orientation consistently under a defined trajectory | Show self-consistency evasion and transform/context contamination |
-| Dropout/delay/source-time spoof | Scheduled missing frames; delays of 0, .5, 1, 2 deadline intervals; bounded and out-of-bound timestamp shifts | Trusted receiver time unchanged; no relabeling late inputs as on-time |
-| On-off / trust farming | Honest warm-up, attack bursts and quiet recovery; freeze duty cycle and onset grid | Initial score is memoryless, but quota latency/expiry has state; temporal alarms require a new controller |
-| Threshold-aware | Search allowed content up to frozen score boundary, using attacker-visible refs/thresholds | Define query/compute budget and attacker knowledge; do not tune on evaluator labels unavailable to attacker |
-| Collusion / Sybil | Two controlled physical groups coordinate counts/odometry; separately duplicate identities | Shared errors and false quorum; do not assume identities independent by name |
-| Harmful quota packing | Select attack content first within serialized quota | Same byte cap, compare trusted selection vs untrusted sender |
-| Benign faults | Noise, miscalibration, legitimate dense returns, occlusion, loss/delay and degraded sensor health | Mark as benign in evaluator; a score alarm is a false attack attribution if interpreted as maliciousness |
+| Random removal | Remove floor(f*N) uniformly selected rows without replacement, f={.1,.3,.6}; N=current sender cloud count | Exact removed count, retained fields/order and spatial distribution; count surplus generally cannot detect it |
+| Localized removal | Freeze one target region after the first 3 s clean prefix from sender-observable geometry: choose the most occupied valid D cell aggregated over that prefix, deterministic ID tie-break. Remove fraction {.25,.5,1} of rows in that fixed cell | Region selection IDs/time, local and global removed fractions, zero-target cases; unknown visibility prevents intent attribution |
+| Displacement | Select 25% of rows by seeded IDs; add local +x offsets {.2,1,3} m in validated sensor-relative coordinates, preserving other fields | Exact count equality, vector/norm in m, crop/cell crossings. Ordinary displacement already preserves total count. |
+| Count-preserving rearrangement | Stronger count evasion: move 25% of rows by attempted {.2,1,3} m seeded horizontal offsets, constrained to remain in each row's original frozen D cell | Preserve total **and per-D-cell** counts. Fixed bounded proposal budget of 10 directions per point; no valid offset => unchanged row and recorded failed move. Report actual moved fraction/norm distribution; no resampling until score changes. |
+| Addition | Add floor(f*N) points, f={.01,.05,.2}, uniformly in a 2 m-side cube centered at the centroid of the sender's target cell during first 3 s; freeze center before onset | Added and reread counts, in/out crop fractions, density and realized geometry. Intensity copied by seeded sampling from current sender intensities, explicitly synthetic, never an intensity detection claim. N=0 or no center => zero/failed injection retained. |
 
-Severity grids are initial synthetic proposals, frozen before test seeds. Real
-grids scale units transparently without selecting intensities for good detection.
-Retain out-of-range/invalid interventions as failed attempts. Full compromised
-fractions `{0,1/N,2/N,all}` are separate scenarios; N and independence groups are
-reported. Include one attacker, two colluders, honest conflict, missing peers,
-membership change and a uniquely useful honest sender.
+For every family include a zero-severity identity overlay control; retain original filenames/metadata convention in isolated derived roots. Algorithm/seed, coordinate frame, rounding, constraints and serialized precision are frozen before held-out execution. One primary seed `20261008`; derive per-point/frame random streams via a documented SHA-256 key of segment/principal/file/family/severity/replicate, not traversal order or Python hash. A second seed may be a predeclared sensitivity, not another independent scene.
 
-## Simulation episodes and leakage
+Use first 25 seconds relative to earliest multi-agent sequence time (cap 300 sync indices; stream timestamps remain independent). Two schedules, half-open in acquisition seconds: sustained [5,15), bursts [5,7) and [10,12). Prefix permits state warm-up; remainder measures recovery. If the sequence is too short or a stream absent, keep that attempted cell with a reason and any observed partial episode; do not move onset to a favorable region. Same schedules and rows across methods. R03 demonstrates one middle-severity sustained case per family and one burst example on mini_7; R05 runs the entire frozen family×severity×schedule grid (30 nonzero episodes per segment, plus clean/identity controls). Do not materialize every archive copy simultaneously.
 
-Start with small ordinary-Python scenes: road plane, static structures, moving
-objects and several explicit sensor viewpoints with controllable occlusion.
-Ground truth lives in evaluator state, never implicitly in the GT-free API.
-Use 60-frame synthetic test episodes initially, clean prefix/attack/recovery
-windows declared in config. Suggested seed roles: 0–9 development, 100–109
-reference, 200–209 calibration, 300–329 held-out test; no family crosses roles.
-Record generator version and paired seed reuse across policies. Sensitivity
-sweeps are predeclared; do not claim independent samples from repeated frames.
+## Overlay and event ledger
 
-Advance time causally, apply message scheduling and immutable overlays, read
-derived files through the same reader used for clean input, compute eligible
-measurements, score, next-frame quotas, then evaluate. A future full simulation
-cannot read clean shadow clouds for scoring when actual payloads are partial.
-On-off detection delay/recovery of a temporal alarm is deferred until its
-state transitions, thresholds, initialization, reset and calibration are fixed.
+Each attempted episode has base hashes, split/fold, principal/sensor, threat version, attacker knowledge, interval, seed key, targets, algorithm/config/source versions, and intended severity. Per affected cloud retain:
 
-## Reader and real-overlay gates
+1. **Intended:** requested selection, counts/fraction, displacement and frame, time interval and diagnostic aim.
+2. **Injected:** actual selected/added/removed/moved row IDs, assigned attributes, bytes written, failed constraints and serialization differences.
+3. **Realized after production read:** accepted/rejected status, finite/count checks, actual point/cell changes, displacement distributions, in/out crop fraction, eligibility, coverage and score effect joined only offline.
 
-All derived point clouds must be reloaded through the **production reader**,
-not a special test parser. Check fields/order/types, finite values, frame and
-coordinate units, expected counts/IDs, round-trip tolerances, source/derived
-SHA-256, and unchanged clean hashes. Addition/removal count effects, timestamps,
-point IDs and transform effects must agree with the injected manifest; preserve
-detected mismatch as a failed run. Reader rejection is not detection success.
+Reload every derived file with the **same production PCD reader and frame adapter** as its clean counterpart. Read→write→read identity controls establish precision tolerance. Rejected files/failed injections remain attempts, never detection successes. Check original and honest companion hashes before/after; retain selection/manifests and derived hashes so overlays are regenerable. Derived filenames must not encode evaluator flags into scorer features. Operational loader receives only a replay-root/event manifest without attack schedule/masks; evaluator join is separately sealed.
 
-Real overlays require validated archive hash/members, labels and association,
-timestamps, transform direction and a bounded sequence preflight. One segment
-is processed at a time; keep all clean/attack versions within its outer fold.
-If timing or transforms are unresolved, affected real results are blocked,
-while synthetic experiments may remain valid. Do not bypass the gate with
-hand-aligned boxes, assumed poses, historical caches or a detector framework.
+Log every sender event, including unchanged companions and unsupported intervals. Onset/offset markings are added to plots only after prediction hashes are frozen. A cloud outside the crop or count-preserving evasion is not quietly removed from the denominator. If a selected region is empty, the attempted intervention is ineffective, not a successful removal experiment.
+
+## Benign controls and deferred attacks
+
+Always retain natural clean viewpoint changes, moving content, sparse returns and recording gaps. Post-freeze labels may annotate moving-object examples but cannot mask scoring inputs. R03 defines synthetic benign stresses with unchanged base truth: independent coordinate noise sigma={.02,.10} m; pose/calibration perturbation translation {.05,.20} m and yaw {.2,1} degrees in the *assumed* adapter; source-clock skew ±{10,50} ms in the modeled alignment path. These are controlled uncertainty scenarios, not measured dataset error distributions. Keep them separate from clean fit/calibration and from malicious point overlays, and report false alarms and abstentions. Raw downsampling can be a benign sensor-degradation control, paired with removal to demonstrate observational equivalence rather than distinguish intent by flag.
+
+Primary point-only runs leave all metadata unchanged. Pose/timestamp spoofing is deferred until verified semantics and control/independence assumptions justify it. Temporal bursts and sustained overlays are core; broad adaptive optimization, collusion, Sybil, physical laser realism and network attacks are deferred. No bandwidth-policy dependency remains.
+
+Storage: keep one clean archive/extraction and one active derived episode; cache compact raw/score records, regenerate other overlays from hashes/manifests, and declare retention before deleting expendable derived scratch. Keep all failures and exact regeneration recipes; never delete original evidence. Bound CPU/RSS/peak disk in each run and record deviations before increasing scope.

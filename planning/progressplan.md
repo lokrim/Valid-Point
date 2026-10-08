@@ -1,42 +1,23 @@
-# Ordered progress plan
+# Ordered progress — revision 2026-10-08
 
-Updated 2026-10-08. **P0 was reviewed; S00–S04 were executed.** S05–S10 remain
-unstarted. G1 and the S03 G2 reproducible score/calibration-semantics gate passed on illustrative fixtures. S04 passed technical execution but **G3 failed as a negative result**, so operational readiness and real-policy claims are blocked. Stage numbers are new Valid Point
-work units, not inherited milestones.
+Planning revision complete; **R01–R07 have not run**. No real data is present locally. S00–S04 results are preserved and qualified by [evidence audit](evidence_audit.md); old S05–S10 are superseded, not pending automatic execution. GR0 is a documentary pass only.
 
-| Stage / prompt | Dependencies | Deliverables | Principal risk | Stop/go criterion | Status |
-| --- | --- | --- | --- | --- | --- |
-| P0 — scaffold/planning | User brief | Empty package, directories/config, method plans, prompts, coverage and setup verification | Mistaking planning for empirical evidence | G0 review; stop before implementation | Reviewed by S00 invocation; no empirical claim |
-| [S00 bootstrap](prompts/00_bootstrap.md) | Researcher review of G0 | Minimal chosen environment, provenance/execution helpers, NB00 | Local Jupyter kernel needs localhost sockets; installed dependency lock is CPython 3.14/macOS arm64 resolved | Fresh notebook structural evidence, no unrequested research | **G1 infrastructure passed**: [run gate](../artifacts/20261005T094948Z-b2d74f78/gate.md), [manifest](../artifacts/20261005T094948Z-b2d74f78/manifest.json); six tests passed. Science not run. |
-| [S01 scenes](prompts/01_synthetic_scenes.md) | S00 | Contracts, small synthetic geometry/reader, NB01 | GT leakage, empty/absent confusion; synthetic visibility is evaluator-only | G1 causal/unknown fixtures visibly correct | **G1 passed**: [gate](../artifacts/20261005T103202Z-d2f4b72b/gate.md), [manifest](../artifacts/20261005T103202Z-d2f4b72b/manifest.json), [executed NB01](../artifacts/20261005T103202Z-d2f4b72b/01_synthetic_scenes.executed.ipynb); nine tests. No score or GT-free result. |
-| [S02 raw evidence](prompts/02_raw_evidence.md) | S01 G1 passed | Kinematics, fixed-region counts and independent eligibility; three NB02 notebooks | Consistent spoof has zero residual; acceleration is nonzero; removal/rearrangement evade counts; visibility unknown | Raw units, confounders/evasions/unknowns tested; no scores yet | **Raw-contract PASS**: [gate](../artifacts/20261005T135710Z-6e4710d8/gate.md), [manifest](../artifacts/20261005T135710Z-6e4710d8/manifest.json), [tests](../artifacts/20261005T135710Z-6e4710d8/test_results.json); 53 tests, three fresh kernels and 36 hand checks. Full G2 remains blocked pending uninvoked S03. |
-| [S03 references/score](prompts/03_references_score.md) | S02 | Clean fitting, calibration, weight-free score/ablations; two NB03 notebooks | All 1,200 test scores tie at A=0 on deterministic fixtures; no empirical sensor FPR/power; frame clustering | G2 monotonicity, lineage, separate calibration; negative results accepted | **G2 semantic PASS**: [gate](../artifacts/20261008T091758Z-d1642764/gate.md), [manifest](../artifacts/20261008T091758Z-d1642764/manifest.json), [tests](../artifacts/20261008T091758Z-d1642764/test_results.json), [reference notebook](../artifacts/20261008T091758Z-d1642764/03_clean_references.executed.ipynb), [score notebook](../artifacts/20261008T091758Z-d1642764/03_score_and_ablations.executed.ipynb). 59 tests, two fresh kernels, 12 hand cases. Threshold c=0 with 0/400 clean calibration alarms; a separate c=1 no-power fixture is recorded. No empirical detection claim. |
-| [S04 GT-free](prompts/04_gt_free.md) | S03 | Fixed tiles, optional ego proposal comparison, oracle gap, NB04 | 3/7 GT-free attack alarms versus 5/7 oracle on all attempts; 2/5 benign false alarms in both; constructed-only evidence | G3; failure blocks operational claim, not recording results | **Technical PASS; G3 FAIL negative result**: [gate](../artifacts/20261008T103246Z-cbed4e64/gate.md), [manifest](../artifacts/20261008T103246Z-cbed4e64/manifest.json), [67 tests](../artifacts/20261008T103246Z-cbed4e64/test_results.json), [NB04](../artifacts/20261008T103246Z-cbed4e64/04_gt_free_oracle_gap.executed.ipynb), [T04](../reports/tables/T04_gap_cases_S04_paired_constructed_gap_cases_20261008T103246Z-cbed4e64.md), [F04](../reports/figures/F04_oracle_gap_S04_paired_constructed_gap_cases_20261008T103246Z-cbed4e64.png). Optional proposal scorer deferred; failure annotations retained. Operational/real-policy claims blocked. |
-| [S05 consensus](prompts/05_consensus.md) | S04 | Leave-one-out diagnostic and gated ablation, NB05 | Correlated peers/collusion/unique honest view | G4 or documented unknown consensus; baseline can continue | Pending |
-| [S06 byte policies](prompts/06_bandwidth.md) | S04; S05 disposition recorded | Serialization, causal quotas, proxies, NB06 | Retrospective savings, hidden full clouds, harmful packing | G5 exact ledgers/equal actual-byte controls | Pending |
-| [S07 overlays](prompts/07_overlays.md) | S02, S04, S06 | Immutable seeded overlay registry/round trips, NB07 | Source mutation, silently failed attacks | G6 full intended/injected/realized ledger | Pending |
-| [S08 synthetic evaluation](prompts/08_synthetic_evaluation.md) | S03–S07 and consensus disposition | Preregistered sweeps, metrics, uncertainty, NB08 | Cherry-picking, abstention inflation, proxy overclaim | G7 complete case inventory; hypothesis may fail | Pending |
-| [S09 real data](prompts/09_real_data.md) | S08, resource decision, frozen protocol | One-archive intake; four outer folds; final H gate; three NB09 templates | Fewer than four labels, invalid geometry, leakage, scene correlation | G8/G9; do not replace scenes based on results | Pending |
-| [S10 paper](prompts/10_paper.md) | S08 and explicit S09 completion/blocked disposition | Paper exports, claim ledger, reproducibility bundle, NB10 | Turning toy/oracle results into operational claims | G10; scope paper to evidence actually obtained | Pending |
+| Historical work | Current credited scope |
+| --- | --- |
+| S00 [gate](../artifacts/20261005T094948Z-b2d74f78/gate.md) | Infrastructure, 6 tests |
+| S01 [gate](../artifacts/20261005T103202Z-d2f4b72b/gate.md) | Synthetic geometry/contracts, 9 tests |
+| S02 [gate](../artifacts/20261005T135710Z-6e4710d8/gate.md) | Raw hand computations, 53 tests |
+| S03 [gate](../artifacts/20261008T091758Z-d1642764/gate.md) | Illustrative reference/score semantics, 59 tests; no independent scenes/real calibration |
+| S04 [gate](../artifacts/20261008T103246Z-cbed4e64/gate.md) | Constructed arithmetic, 67 tests; G3 negative retained; isolation/eligibility claims incomplete |
 
-NB identifiers expand to exact filenames and named outputs in
-[notebook acceptance](08_notebooks.md). The [checklist](checklist.md) lists proof
-requirements, not just code paths. If S09 is incomplete, S10 can prepare a
-synthetic-only negative/limitations report; it cannot declare the requested
-real comparison complete. Optional temporal/learned/detector/probability/
-transfer stages require new prompts, notebooks and gates before work begins.
+| New stage / copy-ready prompt | Prerequisites | Exact purpose / principal risk | Status and stop |
+| --- | --- | --- | --- |
+| [R01 Development intake](prompts/R01_development_intake.md) | Current plan, single-archive resource authorization | Actual schema, time/frame geometry and component feasibility; older reader may differ | Next; awaiting resource decision. Stop GR1 before scores/attacks. |
+| [R02 Causal factors](prompts/R02_causal_factors.md) | GR1 dispositions and usable raw inputs | Integrated production reader, eligibility, D/G diagnostics and real GT isolation; unknowns must not become measurements | Pending. Stop GR2 before interventions. |
+| [R03 Replay and temporal demonstration](prompts/R03_replay_temporal.md) | GR2, development-only factor freeze | Deterministic small overlays, EWMA, real-cloud matched trajectories; history contamination and toy calibration | Pending. Stop GR3; no comparisons. |
+| [R04 Protocol freeze](prompts/R04_protocol_freeze.md) | GR3 complete/limited disposition | Lock split/fit/calibration, full grid, parameters, metrics and resources; leakage/underpowered support | Pending. Stop GR4 without held-out outcomes. |
+| [R05 Comparison experiment](prompts/R05_comparison_evaluation.md) | GR4 and authorized C0–C3 resources | Actual grouped fit/calibration/replay/evaluation, all cells; scene correlation | Pending. Stop GR5; H untouched. |
+| [R06 Final holdout](prompts/R06_final_holdout.md) | Frozen method, R05 disposition, H authorization/exposure check | Single untouched final check; no outcome-driven repairs | Pending. Stop GR6 and record exposure even on failure. |
+| [R07 Paper evidence](prompts/R07_paper_evidence.md) | Explicit R05/R06 completion or blocked disposition | Frozen exports/claim ledger, failure gallery and novelty assessment | Pending. Stop GR7 before external publication. |
 
-S04 is complete and stops for review. Its [run gate](../artifacts/20261008T103246Z-cbed4e64/gate.md)
-records a technical pass and explicit G3 failure. Receiver-owned 400-tile geometry,
-GT isolation, independent track fitting/calibration and monotonic point addition
-passed, but the constructed comparison exposed misses, false alarms, an abstention
-and the count-preserving blind spot. S05 was not launched. Because G3 failed,
-dependent operational/real-policy claims remain blocked unless the researcher
-reviews and separately amends scope; no data acquisition or external publication occurred.
-
-After each invoked stage, update this table with actual artifact IDs, test and
-notebook results, remaining risks and next permitted gate. Append the dated
-decision/change rationale to [history](history.md) and update [checklist](checklist.md)
-evidence. Never advance a stage merely because modules exist. Never auto-run the
-next prompt. Failed prerequisites stop dependent work but need not erase
-independent evidence.
+A technical stage can pass while a hypothesis fails or a component is unavailable. Report both dimensions. After each separately invoked stage append history, update progress/checklist and provide actual notebook/table/test/manifest links; never advance on code presence alone.

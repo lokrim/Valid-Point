@@ -1,95 +1,31 @@
-# Research question, threat model, and claim contract
+# Research question and claim contract — revision 2026-10-08
 
-## Question and falsifiable hypotheses
+**Question:** Under an explicit receiver information model, which deterministic point removal, displacement, count-preserving rearrangement and addition interventions on real Mixed Signals clouds change an explainable conformity score, at which severities, with what benign false alarms, coverage, onset delay and recovery?
 
-Can an explainable, ground-truth-free sender/frame conformity score detect
-specified LiDAR/message corruptions at a declared benign false-alarm budget,
-and can using that score for future byte quotas improve a stated task-quality
-proxy without excessive loss of honest viewpoints?
+H1: clean recorded observations remain relatively conforming under clean-fitted references. H2: some interventions lower conformity relative to matched clean replay; effects depend on geometry, magnitude and evidence availability. H3: temporal accumulation changes persistence, false alarms and delay relative to a memoryless baseline. H4: benign viewpoint/scene changes and information limitations explain important false alarms and non-identifiability. None is hard-coded or required to pass a technical gate. A high score means the available checks found little deviation from their reference, not a probability of honesty or a certificate of point integrity.
 
-- H1: kinematic inconsistency and positive spatial surplus separate some
-  predeclared corruptions from clean observations after clean-only fitting.
-- H2: the GT-free track retains useful discrimination relative to oracle-box
-  evidence, with measured missed cases, extra false alarms, and abstention.
-- H3: at equal actual transmitted bytes, a continuous quota can yield a better
-  quality/corruption/honest-view trade-off than uniform or hard gating.
-- H4 (secondary): eligible peer disagreement adds useful information beyond
-  K/S; it may instead add false alarms or collapse under collusion.
+## Experiment and threat boundary
 
-All can fail. Record null, adverse, ineffective-attack, and unidentifiable
-results. No favorable outcome is an acceptance requirement.
+Base observations are immutable recorded clouds. An evaluator creates deterministic derived copies for one compromised physical vehicle per episode. Primary selected sender is `003` if present; a metadata-only fallback to the first available vehicle (`004`, then `laser`) is recorded before outcome inspection. Other agents remain byte-identical. `top` is the receiver observation; `dome` shares the RSU security principal. Initial study is four physical principals, five sensor streams when present, not five independent votes.
 
-## Decision and information boundary
+Primary adversary controls its own XYZ records and point count in declared windows; intensity is preserved for retained points and explicitly assigned for additions. Identity, source time, poses and calibration remain unchanged in the primary point-only experiment. This isolates point integrity. Authentication and receipt logging are modeled assumptions, not measurements in the archive. Optional pose/time spoofing requires separately verified fields and a new threat version; those claims cannot be inferred from point-only results. Attacker cannot change other streams, trusted receiver state, frozen references, or base files.
 
-The unit is `(segment_or_episode, sender_identity, frame_id, deadline_ns)`.
-Define receiver anchor time `t_f`, deadline `d_f = t_f + delta`, and an explicit
-clock mapping. Only inputs whose receiver availability time is `<= d_f` may
-affect the score. Prior samples must be causal; no centered smoothing, future
-pose interpolation, retrospectively corrected tracks, or future labels.
-Label-derived oracle regions are a declared research exception available to
-the oracle only; they never cross into GT-free scoring or allocation.
+The receiver may use only decoded arrived clouds, causal history from that replay, predeclared sensor/principal identity, declared timestamp mapping, valid causal poses and fixed calibration available by the decision time. Poses from this offline recording are assumed available causally in the modeled receiver; possible offline localization corrections are a limitation, not proof of deployed availability. Metadata under sender control is not independent corroboration.
 
-Keep these separate, with their own versioned records:
+**GT-free operational boundary:** scorer, reference-context lookup and temporal state receive no labels, GT boxes, object counts from labels, attack flags, schedules, masks, clean counterpart clouds, injection success or evaluator outcomes. The offline fitting harness selects clean training observations, but passes operational raw inputs through the same reader and scoring path; the inference API never takes a `clean` flag. Evaluator data is joined only after decisions and state histories have been sealed and hashed. Synthetic arrival generation is upstream of the scorer and recorded as an assumption, not real network telemetry.
 
-1. Raw measurements with units, availability and provenance.
-2. Normalized evidence penalties and reference/support IDs.
-3. Instantaneous score `T`, interval/unknown status, and reason codes.
-4. Optional calibrated alarm and, only after a later gate, temporal state.
-5. Next-frame byte allocation and payload admission.
-6. Evaluator-only labels, attack metadata, utility and quality outcomes.
+Separate records: raw measurements with units/provenance; normalized factor anomalies; instantaneous `A` and conformity `C=1-A`; temporal state `Z` and temporal conformity `C_time=1-Z`; alarm/abstention with threshold ID; evaluator-only outcomes and interval annotations. Unknown is null with a reason, never a zero anomaly. Structural not-applicable factors are frozen per method/sensor, not dropped per frame to improve scores.
 
-`T` is bounded conformity, not a probability of honesty, maliciousness, or
-usefulness. High `T` means specified available checks found no anomaly. It does
-not prove safety; low `T` can result from a benign fault. Unknown is not zero,
-one, a missing numerical default, or an accusation. Useful viewpoints and
-conforming senders are different quantities.
+## Allowed conclusions
 
-## Attacker and protected assumptions
+| Evidence level | Allowed claim | Not licensed |
+| --- | --- | --- |
+| Existing unit fixtures | Exact arithmetic, geometry, explicit counterexamples | Dataset detection, scene independence, boundary completeness |
+| R01 single development archive | Inspected fields, timing/frame feasibility and bounded geometry | Generalization or calibrated false-alarm performance |
+| R02/R03 development replay | Working causal pipeline and illustrative real-cloud trajectories | Held-out effectiveness; publishability |
+| R05 frozen comparison segments | Conditional recall/FPR/coverage and temporal effects for stated scenes/interventions | Intent identification, physical attack realism, robust deployment |
+| R06 final mini_14 | One untouched final check of a frozen method | Broad independent-scene or cross-dataset validation |
 
-Initially one compromised but identified sender controls its own reported
-points, point fields, message content/order/omission, declared source
-timestamps, and self-reported pose/velocity/orientation. It may add, remove,
-rearrange, replace or compress content and exploit a known quota/threshold.
-Timestamp spoofing may choose arbitrary claims; engineering age/skew limits
-determine eligibility, not truth. Within-limit false timestamps remain a
-tested evasion. An attacker cannot rewrite the receiver's trusted arrival
-clock/log, other honest identities' packets, frozen references, receiver-owned
-geometry, or the evaluator's clean original. Authentication binds a packet to
-an identity; it does not certify the measurement or timestamp. Initial peer
-quorum assumes independently controlled identities established outside the
-score, not just distinct strings or certificates.
+Removal can be indistinguishable from occlusion, sparse sampling or sensor failure. Missing packets, empty clouds and absent peer support cannot establish maliciousness. Jointly consistent spoofing may pass all self-consistency checks; plausible fake structure may resemble real moving objects. Attacked history can become a misleading reference. Expose these failures without inventing unobserved visibility.
 
-Later scenarios separately permit two colluders and Sybil identities. Sybil
-stress explicitly violates independent-identity assumptions and cannot be
-claimed solved by peer consensus. Top/dome sensors on one installation are
-not two independent security principals. Receiver-clock compromise, key theft
-of honest peers, or clean-reference poisoning require new threat gates.
-
-| Case | Required interpretation |
-| --- | --- |
-| Graded point addition, including empty-region ghost content | Candidate surplus detection; plausible additions below reference tails may evade. |
-| Count-preserving rearrangement/replacement | Expected weakness of count evidence, not silently reclassified as addition success. |
-| Removal or zero returns | Cannot infer dishonesty without independently validated visibility; preserve measured zero. |
-| Velocity spikes/drift | May expose inconsistent self-reports; same-sender checks are not independent motion verification. |
-| Jointly consistent pose/velocity spoofing | Expected evasion unless independent geometry becomes available. |
-| Dropout, delay, replay, absent messages | Availability effects, attacks only when evaluator knows injection; distinguish present empty cloud. |
-| Noise, miscalibration, legitimate acceleration, occlusion, sensor failure | Benign stress strata; quantify false alarms and honest-view loss separately. |
-| On-off, trust farming, threshold awareness, harmful quota packing | Adaptive stress with causal attacker knowledge and explicit controller assumptions. |
-| Shared occlusion, correlated sensors, collusion, changing membership | Challenge comparability and consensus; disagreement or agreement alone proves nothing. |
-
-## Allowed and unsupported claims
-
-At setup there are **no research findings**. Future claims must name track,
-segments, eligible/scored denominators, attack family/intensity, timing and
-quota assumptions, false-alarm target, and uncertainty. A synthetic result is
-about that generator. Real overlays evaluate specified interventions on a
-recorded scene, not realistic closed-loop traffic behavior.
-
-This plan cannot establish malicious intent, certified safety, calibrated
-honesty probability, broad attack coverage, deployment identity security,
-robustness to all removal/consistent spoofing, or generalization across cities.
-Oracle-box findings do not establish deployable inference. Proxy quality is
-not detector AP or fusion improvement. Receiver dropping is not transmission
-saving. A GT-free failure must be a recorded negative result and blocks any
-operational-readiness claim. Neural detector integration is optional later
-work, never an initial prerequisite.
+Bandwidth policy, transmission savings, detectors/AP, learned combiners, mandatory oracle-box studies, peer voting, collusion/Sybil and broad adaptive attacks are secondary and deferred. H003's quota objective and mandatory K/S/oracle architecture are superseded by H011 in [history](history.md). No publication, deployment or favorable scientific result is promised.

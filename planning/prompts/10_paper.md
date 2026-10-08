@@ -1,3 +1,6 @@
+> **SUPERSEDED 2026-10-08 — historical S-stage prompt; do not execute as the current plan.**
+> See [current R-stage index](README.md), [audit corrections](../evidence_audit.md) and H011 in [history](../history.md). The original body below is preserved for provenance.
+
 # S10 — Paper figures, tables and limitations
 
 Future implementation prompt. **Not executed during project setup.**

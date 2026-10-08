@@ -1,0 +1,609 @@
+[
+  {
+    "run": "20261005T094649Z-a48e693c",
+    "stage": "S00",
+    "test_exit": 0,
+    "outputs_checked": 19,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "00_bootstrap.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T094948Z-b2d74f78",
+    "stage": "S00",
+    "test_exit": 0,
+    "outputs_checked": 19,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "00_bootstrap.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T100506Z-f7408086",
+    "stage": "S00",
+    "test_exit": 0,
+    "outputs_checked": 19,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "00_bootstrap.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T102854Z-d974bbaf",
+    "stage": "S01",
+    "test_exit": 0,
+    "outputs_checked": 6,
+    "hash_failures": [],
+    "failures": [
+      "PermissionError: [Errno 1] Operation not permitted"
+    ],
+    "notebooks": [
+      {
+        "name": "01_synthetic_scenes.executed.ipynb",
+        "counts": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T102910Z-439c7d4e",
+    "stage": "S01",
+    "test_exit": 0,
+    "outputs_checked": 25,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "01_synthetic_scenes.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T103057Z-8bec50c1",
+    "stage": "S01",
+    "test_exit": 0,
+    "outputs_checked": 25,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "01_synthetic_scenes.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T103202Z-d2f4b72b",
+    "stage": "S01",
+    "test_exit": 0,
+    "outputs_checked": 25,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "01_synthetic_scenes.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T104014Z-e567d0f1",
+    "stage": "S01",
+    "test_exit": 0,
+    "outputs_checked": 25,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "01_synthetic_scenes.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T135122Z-f8a4238c",
+    "stage": "S02",
+    "test_exit": 0,
+    "outputs_checked": 79,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "02_kinematics.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_availability.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_spatial_surplus.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T135337Z-e16df08e",
+    "stage": "S02",
+    "test_exit": 0,
+    "outputs_checked": 80,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "02_kinematics.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_availability.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_spatial_surplus.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261005T135710Z-6e4710d8",
+    "stage": "S02",
+    "test_exit": 0,
+    "outputs_checked": 80,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "02_kinematics.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_availability.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_spatial_surplus.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091106Z-2b73f795",
+    "stage": "S03",
+    "test_exit": 1,
+    "outputs_checked": 48,
+    "hash_failures": [],
+    "failures": [
+      "test suite failed",
+      "03_clean_references: PermissionError: [Errno 1] Operation not permitted",
+      "03_score_and_ablations: PermissionError: [Errno 1] Operation not permitted",
+      "score evidence missing"
+    ],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          null,
+          null
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          null,
+          null
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091126Z-6335a103",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091245Z-36f809cd",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091349Z-79149ae5",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 62,
+    "hash_failures": [],
+    "failures": [
+      "03_score_and_ablations: CellExecutionError: An error occurred while executing the following cell:",
+      "score evidence missing"
+    ],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": [
+          "KeyError"
+        ]
+      }
+    ]
+  },
+  {
+    "run": "20261008T091426Z-dcccaaf1",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091535Z-80158861",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091707Z-ebc066a7",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T091758Z-d1642764",
+    "stage": "S03",
+    "test_exit": 0,
+    "outputs_checked": 81,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "03_clean_references.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      },
+      {
+        "name": "03_score_and_ablations.executed.ipynb",
+        "counts": [
+          1,
+          2
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T100541Z-12609b5c",
+    "stage": "S02",
+    "test_exit": 0,
+    "outputs_checked": 89,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "02_kinematics.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_availability.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      },
+      {
+        "name": "02_spatial_surplus.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T101825Z-44d4bf99",
+    "stage": "S00",
+    "test_exit": 0,
+    "outputs_checked": 19,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "00_bootstrap.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "run": "20261008T103246Z-cbed4e64",
+    "stage": "S04",
+    "test_exit": 0,
+    "outputs_checked": 66,
+    "hash_failures": [],
+    "failures": [],
+    "notebooks": [
+      {
+        "name": "04_gt_free_oracle_gap.executed.ipynb",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "errors": []
+      }
+    ]
+  }
+]

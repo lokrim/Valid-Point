@@ -1,185 +1,51 @@
-# Phase 1: evidence, tracks, score, fitting, calibration
+# Minimum feasible method — revision 2026-10-08
 
-This is a proposed mathematical contract, not implemented research. Defaults
-are reviewed/frozen before use; all numeric examples are hand calculations.
+This is a specification, not a claim that any factor works on Mixed Signals. The [field matrix](dataset_field_matrix.md) constrains every input. R01 verifies fields/geometry; R02 makes and records the component disposition using development data only. Do not require K, spatial comparison and consensus all to exist. Do not repair fixed tiles merely because the old implementation uses them.
 
-## Schemas and separation
+## Candidate comparison and initial choice
 
-| Record | Minimum fields |
-| --- | --- |
-| DecisionInput | segment/episode, sender/security-group, sensor type, frame, anchor/deadline/arrival/source time, message state, cloud hash/fields, causal odometry samples, transform ID/validity, receiver context ID, track, region IDs |
-| RawEvidence | key, factor/region, value or null, units, status (`known`, `unknown`, `not_applicable`, `invalid`), reasons, availability time, source IDs; retain partial observations separately |
-| ReferenceBundle | fit segment/seed IDs, context map and support, quantile method, u/b values with units, fallback lineage, engineering spec ID, software/config hash |
-| NormalizedEvidence | K/S/P or null, reference ID, context/support count, factor eligibility, raw row links, reason codes |
-| ScoreRecord | T or null, lower/upper conformity bounds, required/observed factor set, strongest factor/region, track, version, reference ID, reasons; no utility or binary truth label |
-| CalibrationBundle | calibration segments, alpha, threshold/tie rule, support, achieved clean rate/uncertainty, fitted score version; separate from reference fitting |
-| EvaluatorRecord | clean/benign/attack identity, intended/injected/realized effects, labels, proxy outcomes; never a scorer input in the GT-free track |
+| Candidate | Dataset feasibility and explanatory value | Disposition |
+| --- | --- | --- |
+| Motion self-consistency K | Pose/orientation documented; measured velocity unestablished; no point input; point-only attacks leave it unchanged | Keep tested diagnostic, excluded from primary score |
+| Sensor/range-conditioned counts D | XYZ available in documentation; CPU-linear, understandable addition evidence; misses many removals/rearrangements | Smallest primary baseline once frame/range meaning and clean support verified |
+| Within-agent temporal geometry G | Requires causal motion compensation and bounded gap; point location sensitive; scene motion and attacked history confound it | One conditional core comparison arm, not a required universal factor |
+| Receiver/cross-agent geometry X | Transforms alone do not establish overlap/visibility; timestamps differ; receiver geometry can be independent | R02 bounded feasibility diagnostic only; promote after evidence and a dated pre-freeze amendment |
+| Occupancy deficits / two-sided count change | Removal can look like occlusion/viewpoint/sensor changes; global count-preserving attacks evade totals | Plot signed count/occupancy change as raw diagnostic; no deficit accusation in baseline |
+| Intensity | Raw semantics and cross-device calibration unestablished; detector's clipping insufficient | Preserve and inspect, exclude |
+| Peer voting / learned combiner | Extra assumptions/complexity; no justified training population yet | Deferred |
 
-Availability fields: `present_nonempty`, `present_empty`, `absent`, `late`,
-`malformed`. A parsed empty cloud can yield raw count 0, while an absent cloud
-yields null. Neither is positive evidence of dishonesty. An eligible empty
-cloud with frozen regions can have known S=0 for surplus only; visibility and
-removal detection remain unknown. A vehicle missing kinematics never receives
-K=0. Structural inapplicability is predeclared by sensor role (e.g. static RSU),
-not selected dynamically to improve a sender's score.
+Choose D as the implementation baseline because it needs the fewest verified quantities and reuses valid counting code. Compare G alone and max(D,G) only for sensor roles whose compensation is validated. If G is unavailable on a frame, its predeclared arm abstains; D-only remains a separately named arm with its own threshold. If D itself has no valid support, return unknown and report feasibility failure. This choice permits a narrow or negative result rather than manufacturing a detector for every attack.
 
-## Factor contracts
+R02 evaluates candidate feasibility on mini_7 with no attacks: field availability, coordinate correctness, past-pose age, overlap possibility, raw distribution, context support and measured resource costs. It does not pick factors by held-out attack performance. Freeze the retained factor set before R03 development intervention plots; later changes need a new version and explanation. Reference support from one development segment is explicitly exploratory, never final calibration.
 
-| Factor / raw units | Inputs available by deadline; independent information | May detect | Benign confounders and evasions | Exact unknown conditions |
-| --- | --- | --- | --- | --- |
-| Vehicle kinematic self-consistency: displacement residual m; supporting dt s, speed m/s, acceleration m/s² | Two causal positions, prior reported velocity and orientation with known conventions. Same-sender inputs are not independent verification; receiver timing is independent. An external motion observation would be a new factor. | Inconsistent velocity spike/drift or pose jump | Real turns/acceleration, delayed odometry, integration error; jointly spoofed pose/velocity can pass | Missing/nonfinite pose/velocity/orientation, nonpositive/out-of-range dt, unsupported frame/unit conversion, future/late/stale samples, no supported clean reference; static sensor is not_applicable |
-| Positive spatial point surplus: count points per fixed region; context range m, volume m³, sensor class | Present valid cloud, frozen receiver-defined region and transform; clean expected-count reference. Region/normalization must not be defined by the tested sender's current points or claimed range | High-density addition in covered tiles/boxes | Dense real traffic, reflectivity, range changes, proposal errors; plausible injection, rearrangement and removal may evade | Absent/late/malformed cloud, invalid transform, no region in declared coverage, unavailable independent context, unsupported reference/fallback. Visibility unknown forbids deficit inference but does not erase a valid positive count |
-| Leave-one-sender-out disagreement: context-normalized residual, dimensionless; raw peer counts retained | At least two independent eligible peer groups, common region/time and validated comparability, clean per-sensor references, tested sender excluded | An unusually high sender against agreeing comparable peers | Unique honest view, occlusion, correlated faults, two colluders; shared anomalies or below-consensus addition can evade | Insufficient quorum, dependent identities, unmatched region, timing/transform mismatch, missing context/reference, conflicting peers, unverified visibility/comparability |
-| Freshness/missingness/transform/sensor health: ns/s, booleans, invalid-point fraction | Trusted receipt clock/log, membership schedule, parser/finite checks and sourced calibration validity; sender health reports are untrusted annotations | Staleness, absent/invalid evidence; not intent | Network loss, planned absence, sensor fault; attacker can force abstention | Missing trusted clock/membership or unverifiable health claim => unknown corresponding eligibility; never impute nominal health |
+## D: contextual positive count surplus
 
-No agent fraction of total group points enters trust. Count deficit, absence
-of peer support and zero points are not dishonesty evidence without independently
-known visibility. Engineering-invalid reports are excluded with reasons, not
-silently converted into attack positives or high conformity.
+Input: finite current XYZ from the same production reader, sensor identity and its frozen coordinate adapter, fixed range/azimuth cells in a validated sensor-relative frame. Context is stream ID × cell ID; range is cell geometry in metres, not sender-claimed pose or current-cloud range extrema. No dynamic region resizing, point-share normalization or context pooling across devices. If sensor origin is not validated, sensor-range D is blocked; a separately documented raw-coordinate count diagnostic remains uncalibrated.
 
-## Two required tracks
+Initial development geometry: radial cells [0,10), [10,25), [25,50), [50,80) m and eight 45-degree horizontal sectors over all finite heights. These are experimental crop/bin candidates, not claimed FOV. Display excluded counts and geometry; freeze or amend once based on clean coverage/physical frame semantics. Do not tune cell geometry to make attacks detectable. Future physical FOV evidence can remove structurally impossible cells before fitting, never per-frame based on tested content. All retained cells, including zeros, remain in the required universe.
 
-**Oracle-box research:** GT boxes define fixed regions to isolate factor
-behavior. Use evaluator association and oracle geometry only in explicitly
-oracle-namespaced inputs. This can study in-box surplus; missing annotations,
-new ghosts outside boxes and box-association errors limit coverage. It never
-licenses a claim of deployed score availability.
+Raw `n_j` has units points/cell/frame. For each sensor-cell fit `u_j=q95(n_j)` and `b_j=4*(q95-q50)` with linear empirical quantiles on clean reference segments only. Normalize `a_j=clip((n_j-u_j)/b_j,0,1)`, D=max over required cells. The old q95/scale rule is an explainable baseline convention, not a physical constant. At least 200 observations across >=2 training segments per context; report temporal dependence and per-segment counts. Zero scale/insufficient support uses only a predeclared compatible same-sensor, same-range sector-pooled fallback; if unsupported, D is unknown. A broader fallback must be plotted and flagged. Never insert an arbitrary scale or skip unsupported cells to produce a favorable score.
 
-**Ground-truth-free:** start with a receiver-owned fixed grid of 5 m × 5 m
-horizontal tiles over a declared 100 m × 100 m receiver ROI with a separately
-declared height slab. These are proposed synthetic engineering defaults, not
-dataset coverage assertions. Freeze all tile IDs, including empty tiles,
-before examining a sender. Count only finite transformed points within this
-ROI; track outside-ROI points separately. Context uses sensor class, tile
-geometry, and range from an independently validated receiver-side pose when
-available. If range relies solely on spoofable odometry, omit that range bin
-and use a broader fixed context or abstain. Attacker-driven reference switches
-must not reward injection.
+Likely sensitivity: sufficiently large additions/density concentration. Evasions: additions below reference tails, removal, rearrangement preserving counts per cell, attacks outside crop and realistic structure. Confounders: traffic density, view/range changes, surfaces/reflectivity, sampling variation, rain/noise, crop crossings. D=0 means no excess detected; it says nothing about absence, honesty or completeness. Present empty is raw zero and can give no surplus where references exist; absence/malformed input is unknown. Reference data, not current sender content, determines normalization. Runtime O(N+cells) with indexed counts, memory one cloud plus small counts; old O(N×400) loops are illustrative, not a real runtime guarantee.
 
-A later lightweight proposal ablation may cluster ego-only geometry available
-by the deadline. Freeze proposals before reading other senders; do not require
-a detector. False proposals can create false surplus, missed proposals can
-hide attacks, split/merged objects distort counts, empty ego regions may contain
-valuable unique sender observations, and changing content shifts distributions.
-Fixed tiles do not require object association; GT object association is
-evaluator-only. Proposal association, if used, must be ego-only causal geometry
-with an ambiguity state; unmatched/ambiguous regions stay visible and cannot
-be discarded to improve metrics. Show maps for all such failures.
+## G: causal geometric novelty
 
-GT-free score and Phase 2 policy APIs cannot accept labels, GT boxes, attack
-masks, clean counterparts or evaluator utility. The evaluator can use GT for
-outcomes, stratification by object count, and oracle-gap analysis, after decisions
-are frozen. Tests must prove perturbing/withholding GT cannot change GT-free
-scores/quotas. Do not condition GT-free reference bins on GT object count.
+Input: current cloud and the most recent earlier eligible cloud of the same sensor in **this replay**, with independently sourced fixed calibration and causal odometry selection from [data protocol](02_data_protocol.md). Transform the previous cloud into current sensor coordinates using poses at their respective times (latest past samples only). Ego motion compensation does not remove moving objects or scan distortion. Fixed receiver sensors need no vehicle motion model.
 
-## Raw formulas and clean references
+Crop to the same frozen range support; deterministic voxelize at candidate resolution 0.5 m. For each occupied current voxel centroid compute distance to nearest compensated previous occupied centroid; raw G is the 90th percentile directed distance in metres. Do not use previous→current absence as a removal penalty. Compute only if both clouds have >=100 occupied voxels in the valid support and gap <=development-frozen bound; show voxel counts/support. Thresholds 100 and 0.5 m are initial engineering candidates, resolved on clean mini_7 and held fixed thereafter. No guessed ground-plane or GT dynamic-object mask.
 
-For a vehicle with causal samples `t0 < t1 <= deadline`, use the first simple
-zero-order velocity predictor:
+Normalize this scalar using the same upper-tail q95/scale rule, fitted per sensor × elapsed-gap bin ([0,.15], (.15,.3], (.3,.5] seconds initially); fallback sensor-only across supported gaps if clean fit permits, otherwise unknown. Gap bins are experimental assumptions to confirm against recording cadence, not measured delay. Minimum 200 clean pairs across >=2 training segments; zero-scale handling as for D. Reference fit uses actual causal pairs from clean training replay; calibration passes new clean pairs through the identical pipeline.
 
-`r_K = || (p1 - p0) - R0 v0 (t1 - t0) ||_2` metres.
+May expose displacements, count-preserving geometric relocation and novel additions. Misses removal of unsupported surfaces, plausible moving structure, small movement below sampling noise, a repeated spoof that becomes history, and attacks on <10% of occupied support. Legitimate moving objects, disocclusion, pose/calibration error and timing skew may produce large distances. No overlap/no voxels/missing pose/stale history => unknown, not maximal anomaly. Never read a clean shadow history while scoring an attacked arm. After scoring, cache the current valid cloud even if anomalous under the primary policy; freeze references, do not train on it. This explicitly exposes history contamination and eventual adaptation. Rejection-based history gating is a separately calibrated later ablation, not an oracle repair.
 
-The orientation/velocity convention and causal age bound must be verified.
-Normalizing for interval and sensor context accounts for finite integration
-error; this tests self-consistency only. Later integration variants are ablations.
+Use a spatial index (CPU nearest-neighbor or bounded voxel-neighborhood search with documented approximation); avoid N×N matrices. Target one previous voxel cloud per sensor, <=4 GiB RSS, <=1 s/event initially. Measure actual runtime and cap the development diagnostic at 50,000 deterministic spatially selected centroids per cloud, reporting downsampling and approximation. If budget is exceeded, mark blocked/limited and amend before comparison rather than silently change resolution per scene.
 
-For each frozen region j: `r_S,j = count(points inside region j)` points.
-Fit contextual clean upper reference `u = q95(r)` and scale
-`b = 4 * (q95(r) - q50(r))` from clean training only. Quantile convention is
-frozen (linear empirical quantiles). Define `a(r;u,b) = clip((r-u)/b,0,1)`.
-The factor penalties are `K=a(r_K)` and `S=max_j a(r_S,j)`. This is a proposed
-scale, not a universal physical bound; evaluate its sensitivity on development
-only, then freeze. Multiple regions increase the chance of a high S, so
-calibrate the combined sender/frame score, not a per-region false-alarm claim.
+## Score and fitting boundary
 
-Initial context hierarchy: sensor class × fixed receiver tile/range bin
-(spatial), sensor class × dt bin (kinematic), then sensor-class-only, then
-documented pooled context only where units/semantics are comparable. A fit
-context needs at least 200 clean rows drawn across at least two training
-segments (synthetic: two independent scene seeds). Low support or zero b uses
-the predeclared broader context; if none is supported, return unknown. Do not
-choose a positive arbitrary scale to hide a degenerate reference. Show support,
-fallback frequency, temporal correlation and range uncertainty. Reference
-changes always generate a new bundle and invalidate old calibration.
+For each named arm: D-only, G-only, or max(D,G), all required factors must be known. `A=max(required normalized factors)`, `C=1-A`. Unknown full arm stays null with observed-factor diagnostics/coverage; do not substitute a partial maximum as full conformity. Arms exclude structurally inapplicable factors only via frozen role configuration. No hand-picked weights, learned combiner or favorable-curve selection. Max is a convention evaluated against its single-factor arms; it is not guaranteed optimal.
 
-The sender score uses a fixed region universe. If any required region has
-unknown reference/transform, full spatial coverage is unknown; retain the
-maximum of measured penalties only as partial diagnostic evidence. A smaller
-known subset cannot masquerade as a complete high S/T assessment.
+Fit references from clean training clouds/poses **processed through reader → causal eligibility → raw factors**. Separate calibration replays new clean observations through that frozen path and temporal state. Never construct calibration residuals from `u`, `b` or desired thresholds. Offline fit harness owns role/clean selection; operational raw factor/state functions have typed allowlisted inputs. Save row-level input hashes and selected pose/history IDs, context keys, support/fallback, factor version and source time. Real split enforcement uses segment identity, not seed labels.
 
-## Weight-free combiner and strict unknowns
+Target alpha=.01 as a declared research operating convention. For each arm and temporal/memoryless version, collect >=200 known post-warm-up calibration decisions; use the order statistic at `ceil((n+1)*(1-alpha))`, threshold 1 if beyond n, alarm strictly `anomaly > threshold`. Ties quiet. No-power thresholds remain valid negative findings. One calibration segment yields no IID future-FPR guarantee; report achieved clean rate/coverage and scene uncertainty. Do not pool sensors for thresholding initially: calibrate per named sensor stream, recording unavailable thresholds. Reference changes invalidate calibration.
 
-For vehicles, required factors are K and S; for preregistered static sensors,
-only S is required. Peer P is excluded from the first baseline.
-
-```text
-required = {K,S} for vehicle else {S} for known-static sensor
-if every required factor is known:
-    A = max(required penalties)
-    T = 1 - A
-    interval = [T,T]; status = known
-else:
-    T = null; status = unknown
-    A_observed = max(known required penalties, default=0)
-    interval = [0, 1-A_observed]  # diagnostic bounds, not a replacement score
-return raw links, reference IDs, reasons, strongest known factor/region
-```
-
-No manually fixed factor weights such as 40/30/30. The strongest eligible
-anomaly determines the score; its identity can change each frame. Saturation,
-ties and missing factors remain visible. For fixed regions/context/reference,
-adding suspicious points cannot decrease S or increase T. Pure within-tile
-rearrangement can leave T unchanged. Adding data cannot improve eligibility
-through data-dependent proposal selection. Simultaneous odometry/context
-spoofing is a separate stress case, not covered by the fixed-context proof.
-
-| Hand-worked input (not results) | Expected output / explanation |
-| --- | --- |
-| K=.2, S=.7 | T=.3, strongest=S |
-| K=.8, S=.1 | T=.2, strongest=K; no fixed factor preference |
-| K unknown, S=.2 on vehicle | T=null, interval=[0,.8], `KINEMATICS_MISSING` |
-| Static sensor, S=.2 | T=.8, K=`NOT_APPLICABLE_STATIC` |
-| Present empty cloud, valid regions/references, K=.1 | S=0, T=.9; removal/visibility remain unknown, no claim of honesty |
-| Absent cloud, K=.1 | S unknown, T=null, interval=[0,.9], `CLOUD_ABSENT` |
-| Count 10→14, u=10,b=8, K=.2 | S 0→.5; T .8→.5; injected points do not improve conformity |
-| Count unchanged after rearrangement | S unchanged; record blind spot |
-| No regions or unsupported context | S unknown, `NO_REGION` or `REFERENCE_UNSUPPORTED` |
-
-Reason vocabulary also includes `LATE`, `FUTURE_SAMPLE`, `CLOCK_UNVERIFIED`,
-`TRANSFORM_INVALID`, `SENSOR_HEALTH_UNKNOWN`, `VISIBILITY_UNKNOWN`,
-`PEER_QUORUM`, `PEER_CONFLICT`, `VIEW_INCOMPARABLE`, `SURPLUS_HIGH`,
-`KINEMATIC_RESIDUAL_HIGH`, `REFERENCE_FALLBACK`, `SCORE_PARTIAL`.
-Reasons describe measurements/eligibility, never inferred criminal intent.
-
-## Four parameter layers and operating calibration
-
-1. Engineering validity limits: time skew/age, finite coordinates, pose gap,
-   transform tolerance, ROI and required factor roles. Set from documented
-   contracts or declared simulation assumptions, not held-out success.
-2. Clean-fitted ranges: u/b, contextual support and frozen fallback hierarchy.
-3. Clean calibration: propose benign false-alarm target alpha=1% of known-score
-   sender/frames, with additional all-decision and per-sender reporting. On
-   separate clean calibration observations, set `c` to the empirical order
-   statistic at `ceil((n+1)*(1-alpha))`, clamped to threshold 1 if beyond n.
-   Alarm iff `A>c` (equivalently T<1-c); ties do not alarm. Fewer than 200 known
-   calibration rows => operating calibration unavailable. A c=1 with no power
-   is retained as a negative result, not retuned on attacks. Clustered frames
-   invalidate IID coverage guarantees; report achieved rates and grouped
-   uncertainty, never promise exactly 1% on future scenes. Unknowns abstain;
-   report abstention beside FPR to prevent apparent success by abstaining.
-4. Policy parameters: quota shape, exploration reserve, stale-score age and
-   payload rules; specify/freeze separately under the byte protocol.
-
-Do not merge benign stress faults into clean fitting silently. Report clean
-and benign-stress false alarms separately; a future benign-mixture calibration
-is a separately named experiment. Calibration failure or insufficient support
-blocks calibrated detection claims but permits diagnostic plots.
-
-Component ablations: K-only, S-only, max(K,S), oracle versus tiles/proposals,
-contextual versus broad references, strict unknown coverage, and gated P.
-Compare on common eligible cases and all intended decisions including unknowns.
-Later adaptive/learned combiners require training-only parameter fitting,
-monotonicity constraints under point addition, separate clean calibration and
-identical outer splits/budgets. Fitted weights are never universally optimal.
-Probability calibration, reliability diagrams or ECE need a new binary target
-and held-out probability model; they do not apply directly to T.
+Separate instantaneous records from [temporal state](temporal_spec.md). No onset schedule, labels or masks enter either. Retain all factor failures, partial support, invalid readings and no-power outcomes; they are technical dispositions, not evidence of maliciousness.

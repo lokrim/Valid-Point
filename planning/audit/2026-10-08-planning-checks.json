@@ -1,0 +1,33 @@
+{
+  "snapshot_originals_verified": true,
+  "history_append_only": true,
+  "old_prompt_bodies_preserved": true,
+  "superseded_prompts": 11,
+  "broken_current_document_links": [],
+  "new_stage_prompts": [
+    "planning/prompts/R01_development_intake.md",
+    "planning/prompts/R02_causal_factors.md",
+    "planning/prompts/R03_replay_temporal.md",
+    "planning/prompts/R04_protocol_freeze.md",
+    "planning/prompts/R05_comparison_evaluation.md",
+    "planning/prompts/R06_final_holdout.md",
+    "planning/prompts/R07_paper_evidence.md"
+  ],
+  "stage_sections": {
+    "planning/prompts/R06_final_holdout.md": true,
+    "planning/prompts/R07_paper_evidence.md": true,
+    "planning/prompts/R01_development_intake.md": true,
+    "planning/prompts/R05_comparison_evaluation.md": true,
+    "planning/prompts/R03_replay_temporal.md": true,
+    "planning/prompts/R02_causal_factors.md": true,
+    "planning/prompts/R04_protocol_freeze.md": true
+  },
+  "audited_code_configs_tests_notebooks_unchanged": true,
+  "modified_tracked_paths_outside_planning": [],
+  "large_dataset_archives_downloaded": false,
+  "scientific_stages_or_tests_executed": false,
+  "status": "PASS",
+  "completed_local_date": "2026-10-09",
+  "timezone": "Asia/Kolkata",
+  "revision_started": "2026-10-08"
+}
