@@ -210,3 +210,46 @@ nonincreasing literal point-addition sweep. G2 passes only for reproducible
 semantics and leakage prevention on the illustrative inputs; empirical
 operating validity and attack detection remain blocked by absent real/replayed
 clean measurements. S04 and later gates were not run.
+
+## 2026-10-08 — H010: S04 GT-free path completed; G3 negative result
+
+The researcher invoked S04 after the S03 technical G2 pass. Added a receiver-owned
+100 m × 100 m grid of 400 half-open 5 m tiles over the declared [-1,1) m height
+slab, frozen at 0 ns before every tested cloud. Every tile, including empty ones,
+is retained. Trusted receiver range selects context when available; the frozen
+configuration explicitly uses `receiver_range:all` when it is unavailable and
+never accepts sender-claimed range. Outside-ROI points are counted separately and
+cannot expand or redefine the region universe. GT-free operational APIs accept no
+evaluator labels, object counts, GT boxes, attack masks or clean counterparts.
+
+The oracle-box research track is evaluator-namespaced and independently fitted and
+calibrated with disjoint reference/calibration/test seeds. The optional ego-only
+proposal scorer was deferred so that the first result remains attributable to
+fixed tiles. Missed/extra/merged/split proposal states and association ambiguity
+remain visible evaluator annotations and never affect GT-free scores. Tests prove
+that withholding or reversing evaluator labels leaves GT-free decision IDs,
+statuses, T values, alarms and region digests identical; sender points cannot
+change region definitions; and point addition cannot improve T at fixed context.
+
+On 12 deterministic constructed paired attempts, GT-free produced 3/7 attack
+alarms versus 5/7 for oracle boxes; each track abstained once and false-alarmed on
+2/5 benign cases. On the 11 common-known decisions, the attack-alarm counts were
+3/6 versus 5/6, an oracle-minus-GT-free rate gap of 1/3. Fixed tiles detected a
+concentrated in-ROI addition and an empty-region ghost. They missed an oracle
+object split across tiles, an outside-ROI addition, and a count-preserving
+within-tile rearrangement. The rearrangement retained baseline GT-free T=1 while
+the oracle track alarmed. A unique honest view and changing benign content caused
+false alarms. Present-empty remained a known zero without accusation; absent-cloud
+was unknown and abstained. These are constructed fixtures, not empirical sensor
+performance, and T remains conformity rather than an honesty probability.
+
+The immutable [manifest](../artifacts/20261008T103246Z-cbed4e64/manifest.json),
+[executed NB04](../artifacts/20261008T103246Z-cbed4e64/04_gt_free_oracle_gap.executed.ipynb),
+[67-test report](../artifacts/20261008T103246Z-cbed4e64/test_results.json),
+[T04_gap_cases](../reports/tables/T04_gap_cases_S04_paired_constructed_gap_cases_20261008T103246Z-cbed4e64.md),
+[F04_oracle_gap](../reports/figures/F04_oracle_gap_S04_paired_constructed_gap_cases_20261008T103246Z-cbed4e64.png),
+and [gate](../artifacts/20261008T103246Z-cbed4e64/gate.md) record a **technical
+PASS and G3 FAIL_NEGATIVE_RESULT**. Therefore the GT-free score is not defensible
+for operational readiness under the evidence available, and operational/real-policy
+claims are blocked. No detector was imported, no external data was acquired, and
+S05 or any later prompt was not executed. Stop for researcher review.
