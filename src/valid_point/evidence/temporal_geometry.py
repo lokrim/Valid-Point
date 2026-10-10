@@ -39,7 +39,7 @@ def voxel_centroids(xyz: np.ndarray, origin_xy: tuple[float,float], voxel_m: flo
 
 
 def _directed_distances(current: np.ndarray, previous: np.ndarray, *, bucket_m: float = 2.0,
-                        max_shell: int = 4) -> np.ndarray | None:
+                        max_shell: int = 4, max_pair_evaluations: int = 10_000_000) -> tuple[np.ndarray | None, str]:
     """Exact within searched buckets; return None if a point needs farther search.
 
     The bounded 2 m bucket index searches up to four Chebyshev shells. A nearest
@@ -52,6 +52,7 @@ def _directed_distances(current: np.ndarray, previous: np.ndarray, *, bucket_m: 
     for i, key in enumerate(pk):
         buckets[tuple(int(x) for x in key)].append(i)
     out = np.empty(len(current), dtype=np.float64)
+    pair_evaluations = 0
     ck = np.floor(current / bucket_m).astype(np.int32)
     # Group current centroids by bucket to reuse neighbor lookup.
     groups: dict[tuple[int,int,int], list[int]] = defaultdict(list)
@@ -74,7 +75,11 @@ def _directed_distances(current: np.ndarray, previous: np.ndarray, *, bucket_m: 
                 for start in range(0, len(remaining), 128):
                     subset = current[remaining[start:start+128]]
                     for cstart in range(0, len(target), 256):
-                        squared = ((subset[:,None,:]-target[None,cstart:cstart+256,:])**2).sum(axis=2)
+                        chunk = target[cstart:cstart+256]
+                        pair_evaluations += len(subset) * len(chunk)
+                        if pair_evaluations > max_pair_evaluations:
+                            return None, "NEIGHBOR_WORK_BUDGET"
+                        squared = ((subset[:,None,:]-chunk[None,:,:])**2).sum(axis=2)
                         best[start:start+len(subset)] = np.minimum(best[start:start+len(subset)], np.sqrt(squared.min(axis=1)))
             # Any point with distance <= distance to all unsearched bucket faces is final.
             low = np.asarray(key)*bucket_m
@@ -87,8 +92,8 @@ def _directed_distances(current: np.ndarray, previous: np.ndarray, *, bucket_m: 
             if len(remaining) == 0:
                 break
         if len(remaining):
-            return None
-    return out
+            return None, "NEIGHBOR_SEARCH_BOUND"
+    return out, "VALID"
 
 
 def directed_novelty(current_xyz: np.ndarray | None, previous_xyz: np.ndarray | None,
@@ -114,7 +119,7 @@ def directed_novelty(current_xyz: np.ndarray | None, previous_xyz: np.ndarray | 
         return unknown("INSUFFICIENT_VOXEL_SUPPORT",len(current),len(previous),dc,dp)
     transform = np.linalg.inv(map_from_current) @ map_from_previous
     previous_in_current = previous @ transform[:3,:3].T + transform[:3,3]
-    distances = _directed_distances(current, previous_in_current)
+    distances, search_reason = _directed_distances(current, previous_in_current)
     if distances is None:
-        return unknown("NEIGHBOR_SEARCH_BOUND",len(current),len(previous),dc,dp)
+        return unknown(search_reason,len(current),len(previous),dc,dp)
     return GeometryRaw(float(np.quantile(distances,.9)),"known","VALID",len(current),len(previous),gap_s,previous_cloud_id,current_pose_id,previous_pose_id,dc,dp,dc>0 or dp>0)

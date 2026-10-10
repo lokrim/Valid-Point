@@ -204,10 +204,44 @@ def read_pcd(handle: BinaryIO) -> tuple[PCDHeader, np.ndarray]:
     if not {"x", "y", "z"}.issubset(header.fields):
         raise ValueError("missing XYZ")
     body = handle.read()
-    values = np.fromstring(body.decode("ascii"), sep=" ", dtype=np.float32)
+    try:
+        decoded = body.decode("ascii")
+    except UnicodeDecodeError as exc:
+        raise ValueError("non-ASCII PCD body") from exc
+    # fromstring accepts a numeric prefix of malformed input on some NumPy
+    # versions. Validate tokens first so a rejected derived cloud stays rejected.
+    tokens = decoded.split()
+    if len(tokens) != header.points * len(header.fields):
+        raise ValueError("PCD body count differs from header")
+    try:
+        values = np.fromstring(decoded, sep=" ", dtype=np.float32)
+    except ValueError as exc:
+        raise ValueError("invalid PCD numeric token") from exc
     if values.size != header.points * len(header.fields):
         raise ValueError(f"PCD body count {values.size} != {header.points * len(header.fields)}")
+    if not np.isfinite(values).all():
+        raise ValueError("nonfinite PCD body")
     return header, values.reshape(header.points, len(header.fields))
+
+
+def write_pcd(path: Path, values: np.ndarray, *, fields: tuple[str, ...] = ("x", "y", "z", "intensity")) -> None:
+    """Write strict ASCII float32 PCD for the production reader, exclusively."""
+    array = np.asarray(values, dtype=np.float32)
+    if fields != ("x", "y", "z", "intensity") or array.ndim != 2 or array.shape[1] != 4:
+        raise ValueError("unsupported PCD writer layout")
+    if not np.isfinite(array).all() or len(array) > 10_000_000:
+        raise ValueError("invalid PCD writer values")
+    if path.exists():
+        raise FileExistsError(path)
+    header = ("# .PCD v0.7 - Point Cloud Data file format\nVERSION 0.7\n"
+              "FIELDS x y z intensity\nSIZE 4 4 4 4\nTYPE F F F F\n"
+              f"COUNT 1 1 1 1\nWIDTH {len(array)}\nHEIGHT 1\n"
+              f"VIEWPOINT 0 0 0 1 0 0 0\nPOINTS {len(array)}\nDATA ascii\n")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="ascii", newline="\n") as output:
+        output.write(header)
+        for row in array:
+            output.write(" ".join(format(float(value), ".9g") for value in row) + "\n")
 
 
 def load_odometry(path: Path) -> tuple[list[str], list[dict[str, str]]]:

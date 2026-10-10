@@ -1,0 +1,30 @@
+{
+  "stage": "R03",
+  "segment": "mini_7",
+  "revision": "1a61aea747aa6bc45da2c2f085a1f1d3abc41f91",
+  "archive_sha256": "46e9dbe9f6e952be9186a6271abbcaaf11c965a5589d785fc278afd3eb235663",
+  "max_sync_id": 299,
+  "first_seconds": 25.0,
+  "attacker_principal": "003",
+  "seed": 20261008,
+  "fit": {"window_s": [0, 10], "segment": "mini_7", "minimum_rows": 50, "support_name": "exploratory_one_segment_development_only", "quantiles": [0.5, 0.95], "scale_multiplier": 4},
+  "diagnostic_calibration": {"window_s": [10, 25], "minimum_known": 200, "alpha": 0.01, "scene_independence": false},
+  "episodes": [
+    {"family": "random_removal", "severity": 0.3, "schedule": "sustained"},
+    {"family": "localized_removal", "severity": 0.5, "schedule": "sustained"},
+    {"family": "displacement", "severity": 1.0, "schedule": "sustained"},
+    {"family": "rearrangement", "severity": 1.0, "schedule": "sustained"},
+    {"family": "addition", "severity": 0.05, "schedule": "sustained"},
+    {"family": "displacement", "severity": 1.0, "schedule": "burst"}
+  ],
+  "schedules_s": {"sustained": [[5, 15]], "burst": [[5, 7], [10, 12]]},
+  "zero_controls": ["random_removal", "localized_removal", "displacement", "rearrangement", "addition"],
+  "benign_executed": {"coordinate_noise_sigma_m": 0.02, "calibration_translation_m": 0.05, "calibration_yaw_deg": 0.2, "source_clock_skew_ms": 10},
+  "benign_grid_frozen_for_R04": {"coordinate_noise_sigma_m": [0.02, 0.1], "calibration_translation_m": [0.05, 0.2], "calibration_yaw_deg": [0.2, 1.0], "source_clock_skew_ms": [-50, -10, 10, 50], "raw_downsampling_fraction": [0.1, 0.3, 0.6]},
+  "temporal": {"tau_s": 1.0, "g_reset_s": 0.5, "min_updates": 10, "tau_sensitivity_deferred": [0.25, 1.0, 2.0]},
+  "reader": {"format": "ASCII PCD float32 XYZ intensity", "write_precision": "9 significant decimal digits", "identity_atol": 0.000001},
+  "geometry_work_bound": {"max_pair_evaluations_per_event": 10000000, "exhaustion": "G unknown with NEIGHBOR_WORK_BUDGET; D unaffected", "reason": "deterministic resource guard after interrupted development replay; no outcome-based threshold or factor change"},
+  "receipt_model": "ideal_arrival_equals_source; modeled receiver pose availability equals pose stamp",
+  "reference_final_rule_unchanged": "at least 200 rows across at least two training segments; separate calibration segment",
+  "split_lineage": "mini_7 is one contiguous development segment; internal time blocks do not establish independent scenes"
+}

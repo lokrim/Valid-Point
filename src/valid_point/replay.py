@@ -84,9 +84,10 @@ class RawFactorRecord:
 
 class AllowedSource:
     """Filesystem boundary. Discovery and reads stay inside explicit raw dirs."""
-    def __init__(self, clouds_dir: Path, poses_dir: Path):
+    def __init__(self, clouds_dir: Path, poses_dir: Path, extra_clouds_dir: Path | None = None):
         self.clouds_dir = clouds_dir.resolve(strict=True)
         self.poses_dir = poses_dir.resolve(strict=True)
+        self.extra_clouds_dir = extra_clouds_dir.resolve(strict=True) if extra_clouds_dir is not None else None
         self.access_log: list[str] = []
 
     def _check(self, path: Path, parent: Path) -> Path:
@@ -116,7 +117,9 @@ class AllowedSource:
     def read_cloud(self, event: CloudEvent) -> tuple[np.ndarray, str]:
         if event.path is None:
             raise ValueError("absent cloud")
-        path = self._check(event.path,self.clouds_dir)
+        resolved = event.path.resolve(strict=True)
+        parent = self.extra_clouds_dir if self.extra_clouds_dir is not None and resolved.parent == self.extra_clouds_dir else self.clouds_dir
+        path = self._check(event.path,parent)
         name = parse_cloud_name(path.name)
         if (name.path,name.stream,name.sync_id,name.source_ns) != (event.cloud_id,event.stream,event.sync_id,event.source_ns):
             raise ValueError("cloud event/path identity mismatch")
