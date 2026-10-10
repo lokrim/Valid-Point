@@ -1,0 +1,23 @@
+{
+  "stage": "R02",
+  "dataset": "sberrio/Mixed-Signals-V2X",
+  "revision": "1a61aea747aa6bc45da2c2f085a1f1d3abc41f91",
+  "archive_sha256": "46e9dbe9f6e952be9186a6271abbcaaf11c965a5589d785fc278afd3eb235663",
+  "segment": "mini_7",
+  "max_sync_id": 49,
+  "first_seconds": 5.0,
+  "receipt_model": "ideal_arrival_equals_source; modeled receiver pose availability equals pose stamp",
+  "max_pose_age_ns": 150000000,
+  "max_cloud_age_ns": 150000000,
+  "max_gap_s": 0.5,
+  "min_voxels": 100,
+  "voxel_m": 0.5,
+  "voxel_cap": 50000,
+  "range_edges_m": [0, 10, 25, 50, 80],
+  "azimuth_sectors": 8,
+  "method_arms_proposed": ["D-only all validated streams", "G-only conditional", "max(D,G) conditional"],
+  "reference_id": null,
+  "calibration_id": null,
+  "seeds": {},
+  "split_lineage": "mini_7 development only; one contiguous window; no independent scenes"
+}

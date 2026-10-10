@@ -1,6 +1,6 @@
 # Valid Point: real-cloud replay research plan
 
-Revised **2026-10-08** under the researcher's authorized planning revision. This is the current planning authority for package `valid_point`. The planning revision itself ran no dataset archive or old stage prompt; R01 subsequently completed on 2026-10-09 and stopped at [GR1](../artifacts/20261008T192922Z-R01/gate.md). Start with [the plain-language overview](overview.md), [evidence audit](evidence_audit.md), and [R01 results](../notebooks/R01_development_intake.ipynb). R02 has not been invoked.
+Revised **2026-10-08** under the researcher's authorized planning revision. This is the current planning authority for package `valid_point`. R01 completed on 2026-10-09 at [GR1](../artifacts/20261008T192922Z-R01/gate.md); R02 completed at [GR2](../artifacts/20261009T085704Z-R02/gate.md) with raw causal factors and no scoring. Start with [the plain-language overview](overview.md), [evidence audit](evidence_audit.md), [R01 results](../notebooks/R01_development_intake.ipynb), and the [R02 executed notebook](../artifacts/20261009T085704Z-R02/R02_causal_factors.executed.ipynb).
 
 The experiment replays real Mixed Signals observations, modifies one agent's clouds in separate deterministic copies, and compares causal conformity trajectories against matched clean replay. Favorable detection and publication are hypotheses, never gates.
 

@@ -1,6 +1,6 @@
 # Ordered progress — revision 2026-10-08
 
-Planning revision complete; **R01 completed 2026-10-09 and stopped at GR1**. The pinned mini_7 raw data is present only under Valid Point. R02–R07 have not run. S00–S04 results remain qualified by [evidence audit](evidence_audit.md); old S05–S10 are superseded. GR0 was a documentary pass only.
+Planning revision complete; **R01 completed at GR1 and R02 completed at GR2 on 2026-10-09**. The pinned mini_7 raw data is present only under Valid Point. R03–R07 have not run. S00–S04 results remain qualified by [evidence audit](evidence_audit.md); old S05–S10 are superseded. GR0 was a documentary pass only.
 
 | Historical work | Current credited scope |
 | --- | --- |
@@ -13,7 +13,7 @@ Planning revision complete; **R01 completed 2026-10-09 and stopped at GR1**. The
 | New stage / copy-ready prompt | Prerequisites | Exact purpose / principal risk | Status and stop |
 | --- | --- | --- | --- |
 | [R01 Development intake](prompts/R01_development_intake.md) | Current plan, single-archive resource authorization | Actual schema, time/frame geometry and component feasibility; older reader may differ | **Complete; [GR1 technical PASS](../artifacts/20261008T192922Z-R01/gate.md), [notebook](../notebooks/R01_development_intake.ipynb), 84 tests.** Density feasible; temporal/cross-agent geometry and K conditional; intensity excluded. Stop before scores/attacks. |
-| [R02 Causal factors](prompts/R02_causal_factors.md) | GR1 dispositions and usable raw inputs | Integrated production reader, eligibility, D/G diagnostics and real GT isolation; unknowns must not become measurements | Next, separately invoked; not started. Stop GR2 before interventions. |
+| [R02 Causal factors](prompts/R02_causal_factors.md) | GR1 dispositions and usable raw inputs | Integrated production reader, eligibility, D/G diagnostics and real GT isolation; unknowns must not become measurements | **Complete; [GR2 technical PASS](../artifacts/20261009T085704Z-R02/gate.md), [executed notebook](../artifacts/20261009T085704Z-R02/R02_causal_factors.executed.ipynb), [method freeze](../artifacts/20261009T085704Z-R02/method_freeze.json), 92 tests.** D raw coverage 250/250; G 163/250, 82 bounded-search unknowns plus 5 first-history unknowns. Stop before interventions/references/calibration. |
 | [R03 Replay and temporal demonstration](prompts/R03_replay_temporal.md) | GR2, development-only factor freeze | Deterministic small overlays, EWMA, real-cloud matched trajectories; history contamination and toy calibration | Pending. Stop GR3; no comparisons. |
 | [R04 Protocol freeze](prompts/R04_protocol_freeze.md) | GR3 complete/limited disposition | Lock split/fit/calibration, full grid, parameters, metrics and resources; leakage/underpowered support | Pending. Stop GR4 without held-out outcomes. |
 | [R05 Comparison experiment](prompts/R05_comparison_evaluation.md) | GR4 and authorized C0–C3 resources | Actual grouped fit/calibration/replay/evaluation, all cells; scene correlation | Pending. Stop GR5; H untouched. |

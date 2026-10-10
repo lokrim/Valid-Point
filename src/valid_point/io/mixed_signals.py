@@ -187,7 +187,8 @@ def read_pcd_header(handle: BinaryIO) -> PCDHeader:
         raise ValueError("invalid PCD field vectors")
     if any(s not in (1, 2, 4, 8) for s in sizes) or any(t not in ("F", "I", "U") for t in types) or any(c <= 0 for c in counts):
         raise ValueError("invalid PCD field type")
-    if width <= 0 or height <= 0 or points != width * height or points > 10_000_000:
+    # A present empty cloud is a valid payload and differs from an absent file.
+    if width < 0 or height <= 0 or points != width * height or points > 10_000_000:
         raise ValueError("invalid PCD dimensions")
     if len(entries["DATA"]) != 1:
         raise ValueError("invalid DATA declaration")
