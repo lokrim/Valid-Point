@@ -1,3 +1,11 @@
+R05 continuation — local frozen data already provisioned and verified
+
+Do not download, reacquire, extract, replace, or delete any dataset archives or extracted comparison data. The local data folder is already set up and source/archive verification has completed.
+
+Use only the existing pinned local TARs and extracted data for mini_7, mini_10, mini_11, mini_12, and mini_13. Before any data action, inventory the local files and reuse them in place. In particular, do not create or resume any `*.tar.partial` download. If a partial archive remains from an interrupted duplicate download, record it as redundant and stop; do not continue downloading it.
+
+Proceed only with the remaining R05 work: safe intake validation, replay evaluation, calibration, sealed predictions, evaluator joins, tests, notebooks, artifacts, and R05 gate reporting. Keep H/mini_14 untouched. Do not change frozen source/config inputs or initiate any next-stage work.
+
 # R05 — frozen segment-grouped replay evaluation
 
 ## Prerequisites and scope
