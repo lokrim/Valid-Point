@@ -8,7 +8,10 @@ version = "0.0.0"
 description = "Reproducible research on sender conformity in cooperative LiDAR"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["numpy>=2,<3"]
+dependencies = [
+    "nbconvert>=7.17.2",
+    "numpy>=2,<3",
+]
 
 [project.optional-dependencies]
 # S00/S01 notebook execution, figure export and invariant tests.
