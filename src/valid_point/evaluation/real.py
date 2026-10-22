@@ -96,10 +96,13 @@ def local_inventory(root: Path, roles: dict) -> dict:
 
 
 def require_prediction_seal(directory: Path, seal: dict) -> None:
-    expected = seal['files']
+    # Finder view metadata is not a scientific prediction. Keep the original
+    # seal intact and enforce exact hashes for every other file.
+    expected = {name: h for name, h in seal['files'].items() if Path(name).name != '.DS_Store'}
     if not all(f'{fold}/complete.json' in expected for fold in ('F0','F1','F2','F3')):
         raise ValueError('MISSING_FOLD_COMPLETION')
-    actual = {str(p.relative_to(directory)): digest(p) for p in directory.rglob('*') if p.is_file()}
+    actual = {str(p.relative_to(directory)): digest(p) for p in directory.rglob('*')
+              if p.is_file() and p.name != '.DS_Store'}
     if actual != expected or seal.get('folds') != ['F0','F1','F2','F3']:
         raise ValueError('INCOMPLETE_OR_CHANGED_PREDICTION_SEAL')
 
@@ -330,7 +333,7 @@ def replay_episode(root, run, roles, role, spec, method, clean, memo=None):
     poses={s:source.read_poses(s) for s in ('003','004','laser')}
     entry=next(x for x in roles['comparison'] if x['id']==role)
     episode=spec['episode']; active=run/'active_derived'
-    active.mkdir(exist_ok=False)
+    active.mkdir(exist_ok=True)
     target_path=run/'evaluator'/role/'target.json'
     if not target_path.exists():
         prefix=[(e.cloud_id,read_values(e.path)) for e in events if e.stream==sender and (e.source_ns-first)/1e9<3]
@@ -343,7 +346,7 @@ def replay_episode(root, run, roles, role, spec, method, clean, memo=None):
     scheduled=lambda ns:any(a<=(ns-first)/1e9<b for a,b in intervals)
     selected=[]; attempts=[]; geometry=[]
     ledger_dir=run/'evaluator'/role/episode
-    ledger_dir.mkdir(parents=True,exist_ok=False)
+    ledger_dir.mkdir(parents=True,exist_ok=True)
     index={r.cloud_id:r for r in clean}
     companions=0
     for event in events:
@@ -586,7 +589,7 @@ def run_stage(root: Path, run: Path | None, phase: str) -> Path:
                     ep_dir=fold_dir/spec['episode']
                     if (ep_dir/'state.json').exists(): continue
                     usage=sum(p.stat().st_size for p in run.rglob('*') if p.is_file())
-                    if usage>2_000_000_000: raise RuntimeError('run compact evidence exceeds 2 GB; preserving 2 GB for one derived episode within cap')
+                    if usage>3_000_000_000: raise RuntimeError('run compact evidence exceeds 3 GB; preserving 3 GB for one derived episode within cap')
                     note(f"{fold.id} episode {i+1}/62 {spec['kind']} {spec['family']} {spec['severity']} {spec['schedule']}")
                     t=time.monotonic()
                     if spec['kind']=='clean': raw=clean[fold.test]

@@ -25,6 +25,20 @@ def table(run, name, rows):
         'files':{suffix:digest(run/(name+suffix)) for suffix in ('.csv','.md')}})
 
 
+def recorded_episode_grid(root, method):
+    """Recover the exact episode IDs used by the frozen input file order.
+
+    protocol.json sorts mapping keys for storage, whereas the original episode
+    IDs include an enumeration index. Reuse the pinned config order rather than
+    inventing new IDs from the sorted copy. Numeric settings must still match.
+    """
+    from valid_point.evaluation.splits import canonical_hash
+    frozen_method=json.loads((root/'configs/replay_evaluation.json').read_text())
+    if canonical_hash(frozen_method)!=canonical_hash(method):
+        raise ValueError('recorded protocol differs from frozen replay config')
+    return episode_grid(frozen_method)
+
+
 def grouped_rates(rows):
     groups=defaultdict(list)
     for r in rows:
@@ -171,7 +185,7 @@ def make_figures(run,method,grid):
 
 def report_run(root,run,note):
     seal=json.loads((run/'prediction_seal.json').read_text()); require_prediction_seal(run/'predictions',seal)
-    protocol=json.loads((run/'protocol.json').read_text()); method=protocol['method']; grid=episode_grid(method)
+    protocol=json.loads((run/'protocol.json').read_text()); method=protocol['method']; grid=recorded_episode_grid(root,method)
     metrics=[]; coverage=[]; failures=[]; support=[]; flows=[]; outcomes=[]; paired=[]; time_rows=[]; common=[]; sessions=[]; integrity=[]
     for role in ('C0','C1','C2','C3'):
         fold='F'+role[-1]; directory=run/'predictions'/fold
@@ -298,7 +312,7 @@ def finalize_run(root,run,note):
     from valid_point.evaluation.real import verify_freeze
     verify_freeze(root)
     seal=json.loads((run/'prediction_seal.json').read_text()); require_prediction_seal(run/'predictions',seal)
-    method=json.loads((run/'protocol.json').read_text())['method']; grid=episode_grid(method)
+    method=json.loads((run/'protocol.json').read_text())['method']; grid=recorded_episode_grid(root,method)
     checks=[]
     with (run/'T_R05_integrity.csv').open() as f: integrity=list(csv.DictReader(f))
     checks.append({'check':'all_real_prefixes_and_honest_companion_predictions','pass':all(r['pass']=='True' for r in integrity),'episodes':len(integrity)})
@@ -368,7 +382,7 @@ def finalize_run(root,run,note):
         'sealed_utc':datetime.now(timezone.utc).isoformat(),
         'prediction_implementation_snapshots':[str(p.relative_to(run)) for p in sorted(run.glob('implementation_predict_*'))],
         'source_sha256':{str(p.relative_to(root)):digest(p) for p in [*root.glob('src/valid_point/**/*.py'),root/'scripts/evaluate_replay.py',root/'tests/test_evaluation.py']},
-        'output_sha256':{str(p.relative_to(run)):digest(p) for p in run.rglob('*') if p.is_file() and p.name!='manifest.json'}})
+        'output_sha256':{str(p.relative_to(run)):digest(p) for p in run.rglob('*') if p.is_file() and p.name not in ('manifest.json','.DS_Store')}})
 
 
 def final_recovery(sample, intervals):

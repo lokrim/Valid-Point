@@ -231,3 +231,26 @@ def test_raw_memo_does_not_read_future_event(tmp_path):
     source=AllowedSource(clouds,pose_dir,extras)
     row=CausalRawMemo().replay([e],source,{'003':[]})[0]
     assert row.reason=='FUTURE_SOURCE' and source.access_log==[]
+
+
+def test_seal_ignores_only_finder_metadata_and_still_rejects_study_changes(tmp_path):
+    directory=tmp_path/'predictions'; directory.mkdir()
+    for fold in ('F0','F1','F2','F3'): write_json(directory/fold/'complete.json',{'status':'complete'})
+    (directory/'.DS_Store').write_bytes(b'original Finder state')
+    seal={'folds':['F0','F1','F2','F3'],'files':{str(p.relative_to(directory)):digest(p) for p in directory.rglob('*') if p.is_file()}}
+    (directory/'.DS_Store').write_bytes(b'updated Finder state')
+    require_prediction_seal(directory,seal)
+    (directory/'unexpected.json').write_text('{}')
+    with pytest.raises(ValueError): require_prediction_seal(directory,seal)
+
+
+def test_reporting_recovers_original_ids_after_sorted_protocol_serialization(tmp_path):
+    from valid_point.evaluation.statistics import recorded_episode_grid
+    method=json.loads(Path('configs/replay_evaluation.json').read_text())
+    stored=json.loads(json.dumps(method,sort_keys=True))
+    assert episode_grid(method)!=episode_grid(stored)
+    config=tmp_path/'configs/replay_evaluation.json';config.parent.mkdir()
+    config.write_text(json.dumps(method))
+    assert recorded_episode_grid(tmp_path,stored)==episode_grid(method)
+    stored['calibration']['alpha']=.02
+    with pytest.raises(ValueError): recorded_episode_grid(tmp_path,stored)
